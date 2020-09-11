@@ -31,8 +31,17 @@ Dapr 是一个可移植的（portable）、事件驱动（event-driven）的运�
 
 构建块|描述
 --|--
-服务调用（Service Invocation）|
+服务调用（Service Invocation）| 容错 service-to-service invocation 使方法调用（包括重试调用）远程服务，无论这些服务位于任何被支持的托管环境。
+状态管理（State Management）| 通过状态管理存储键/值对，可以同时在你的应用程序中实现长时间运行、高可用、有状态服务和无状态服务。状态存储是可插拔的并且可以使用 Azure CosmosDB， Azure SQL Server， PostgreSQL， AWS DynamoDB 或者 Redis。
+发布和订阅消息（Publish and Subscribe Messaging）| 发布事件和订阅主题。
+资源绑定（Resource Bindings）| 带有触发器的资源绑定进一步构建在事件驱动的架构之上，通过从任何外部源(如数据库、队列、文件系统等)接收和发送事件来实现伸缩性和容错性。
+Actor 模式（Actors）| 有状态和无状态对象的模式，通过方法和状态封装使并发变得简单。
 
-> 引用：
-> Resiliency is the ability to recover from failures and continue to function. It isn't about avoiding failures but accepting the fact that failures will happen and responding to them in a way that avoids downtime or data loss. The goal of resiliency is to return the application to a fully functioning state after a failure.
-> Resiliency 是一种从失败中恢复并且继续的能力。
+---
+
+## 参考
+
+- [1] [微软文档](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/)
+
+    > Resiliency is the ability to recover from failures and continue to function. It isn't about avoiding failures but accepting the fact that failures will happen and responding to them in a way that avoids downtime or data loss. The goal of resiliency is to return the application to a fully functioning state after a failure.
+    > 翻译：Resiliency 是一种从故障中恢复并且继续工作的能力。并不是避开故障而是接受可能会故障的事实并且以某种方式回应它们以避免停机或者数据丢失。Resiliency 的目标是在发生故障后将应用程序返回到完全正常的状态。
