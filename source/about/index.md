@@ -20,7 +20,8 @@ Current Version: 0.10.0
 
 ### 官方文档翻译
 
-- [Dapr-README](dapr/介绍.md)
+- {% post_link dapr-readme %}
+<!-- - [简介](../_posts/dapr-readme.md) -->
 
 ### 通过 Java8 使用 Dapr
 

@@ -1,9 +1,9 @@
 ---
-title: dapr-readme
+title: 简介
 catalog: true
 toc_nav_num: true
 date: 2020-09-11 08:59:25
-subtitle: Dapr 源码 README
+subtitle: Dapr 源码 readme
 header-img: /img/dapr/dapr.svg
 tags: 
 - Dapr
@@ -12,11 +12,9 @@ catagories:
 - Dapr
 ---
 
-# 源码README
+## 介绍
 
 [官方文档地址](https://github.com/dapr/dapr)
-
-## 介绍
 
 Dapr（Distributed Application Runtime） 是一个可移植的（portable）、事件驱动（event-driven）的运行时框架。开发者通过 Dapr 可以构建弹性、无状态、有状态的运行在云上和边缘的微服务。并且拥抱开发语言和开发框架的多样性。
 
