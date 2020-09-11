@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Tags - ZhangX | Dapr
+          Dapr 概述 - ZhangX | Dapr
         
     </title>
 
-    <link rel="canonical" href="http://www.huweihuang.com/tags/">
+    <link rel="canonical" href="http://www.huweihuang.com/article/doc-overview/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/tag.png')
-            /*page*/
+            background-image: url('/img/dapr/dapr.svg')
+            /*post*/
         
     }
     
@@ -85,10 +85,20 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="site-heading">
-                        <h1>Tags</h1>
-                        <!--<hr class="small">-->
-                        <span class="subheading">Hey, this is Tags.</span>
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Dapr" title="Dapr">Dapr</a>
+                            
+                              <a class="tag" href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
+                            
+                        </div>
+                        <h1>Dapr 概述</h1>
+                        <h2 class="subheading">docs/overview</h2>
+                        <span class="meta">
+                            Posted by ZhangX on
+                            2020-09-11
+                        </span>
                     </div>
                 
 
@@ -184,117 +194,201 @@
 
 
     <!-- Main Content -->
-    <!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <!-- 标签云 -->
-            <div id='tag_cloud' class="tags">
-                
-                    <a href="#Dapr" title="Dapr" rel="2">Dapr</a>
-                
-                    <a href="#原文翻译" title="原文翻译" rel="2">原文翻译</a>
-                
-            </div>
+    <!-- Modify by Yu-Hsuan Yen -->
 
-            <!-- 标签列表 -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Dapr">
-                    <span class="tag-text">Dapr</span>
-                </span>
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="dapr-概述">Dapr 概述</h2>
+<p><a href="https://github.com/dapr/docs/tree/master/overview" target="_blank" rel="noopener">官方文档地址</a></p>
+<p>Dapr 是一个可移植的（portable）、事件驱动（event-driven）的运行时框架。企业开发者使用 Dapr 可以轻松构建弹性、无状态和有状态运行在云上和边缘的微服务。并且拥抱开发语言和开发框架的多样性。</p>
+<h3 id="任何开发语言-任何开发框架-运行在任何地方">任何开发语言、任何开发框架、运行在任何地方</h3>
+<p>我们正处于云应用浪潮中。开发者使用 Web + Database 架构（例如经典3层设计）会比较轻松，但当面对天生具备分布式属性的微服务应用架构来说可能就比较吃力了。要成为一个分布式系统专家是有难度的事情，你也没必要成为一个分布式系统专家。开发者应该专注于业务逻辑，同时依赖各种云平台以使应用程序拥有可伸缩性（scale）、容错性（resiliency）、可维护性（maintainability）、弹性（elasticity） 以及云原生架构的其它属性。</p>
+<p>这就是 Dapr 切入点。Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因此，你可以选择开发语言和框架构建可移植的应用程序。每个构建块都是独立的，你可以在你的应用程序中使用它们中的一个、几个或者所有。</p>
+<h3 id="云和边缘微服务构建块">云和边缘微服务构建块</h3>
+<p>当架构微服务应用程序时有很多东西需要考虑。而当构建微服务应用程序时 Dapr 提供常用功能的最佳实践。开发者可以按标准在微服务中使用 Dapr 提供的常用功能并且部署到任何环境。Dapr 通过提供分布式系统构建块以支撑这种能力。</p>
+<p>这些构建块中每一个块都是独立的，意味着你可以在你的应用程序中使用一个、几个或者全部构建块。在 Dapr 的首次发布中，提供以下构建块：</p>
+<table>
+<thead>
+<tr>
+<th>构建块</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务调用（Service Invocation）</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>引用：<br>
+Resiliency is the ability to recover from failures and continue to function. It isn’t about avoiding failures but accepting the fact that failures will happen and responding to them in a way that avoids downtime or data loss. The goal of resiliency is to return the application to a fully functioning state after a failure.<br>
+Resiliency 是一种从失败中恢复并且继续的能力。</p>
+</blockquote>
+
                 
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/article/doc-overview/">
-                        <h2 class="post-title">
-                            Dapr 概述
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                docs/overview
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
+
                 <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/article/dapr-readme/" data-toggle="tooltip" data-placement="top" title="简介">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
                 
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/article/dapr-readme/">
-                        <h2 class="post-title">
-                            简介
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                Dapr 源码 readme
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
                 
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="原文翻译">
-                    <span class="tag-text">原文翻译</span>
-                </span>
+                <!--分享-->
+                <br>                       
                 
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/article/doc-overview/">
-                        <h2 class="post-title">
-                            Dapr 概述
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                docs/overview
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
+                <!-- require APlayer -->
                 
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/article/dapr-readme/">
-                        <h2 class="post-title">
-                            简介
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                Dapr 源码 readme
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
+
+                <!-- duoshuo Share start -->
                 
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
             </div>
             
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
 
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#dapr-概述"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Dapr &#x6982;&#x8FF0;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#任何开发语言-任何开发框架-运行在任何地方"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x4EFB;&#x4F55;&#x5F00;&#x53D1;&#x8BED;&#x8A00;&#x3001;&#x4EFB;&#x4F55;&#x5F00;&#x53D1;&#x6846;&#x67B6;&#x3001;&#x8FD0;&#x884C;&#x5728;&#x4EFB;&#x4F55;&#x5730;&#x65B9;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#云和边缘微服务构建块"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x4E91;&#x548C;&#x8FB9;&#x7F18;&#x5FAE;&#x670D;&#x52A1;&#x6784;&#x5EFA;&#x5757;</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
 
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Dapr" title="Dapr">Dapr</a>
+                        
+                          <a class="tag" href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
         </div>
     </div>
-</div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
 
 
     <!-- Footer -->
