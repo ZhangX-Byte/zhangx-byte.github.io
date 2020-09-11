@@ -2,7 +2,7 @@
 title: ABOUT
 date: 2020-09-11 08:59:25
 description: 
-header-img: "/img/about/about_bg.jpg"
+header-img: "/img/about/about-bg.jpg"
 ---
 
 # Dapr

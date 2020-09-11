@@ -25,8 +25,8 @@ SEOTitle: ZhangX | Dapr
 email: 417652344@qq.com
 description: ""
 keyword: ""
-header-img: /img/avatar/bg.png
-article-img: /img/article_header/article_bg.jpg
+header-img: /img/avatar/home-bg.jpg
+article-img: /img/article_header/home.jpg
 404-img: /img/header_img/404.png
 signature: false #show signature
 signature-img: img/signature/BeanTechSign-white.png 
@@ -65,7 +65,7 @@ ga_domain: yoursite
 # Sidebar settings
 sidebar: true                       # whether or not using Sidebar.
 sidebar-about-description: "Do some thing."
-sidebar-avatar: /img/avatar/header.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/avatar/head.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 widgets:
 - featured-tags
 - short-about
