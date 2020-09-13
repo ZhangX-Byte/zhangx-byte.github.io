@@ -21,7 +21,7 @@ Current Version: 0.10.0
 ### 官方文档翻译
 
 - {% post_link dapr-readme %}
-<!-- - [简介](../_posts/dapr-readme.md) -->
+- {% post_link doc-overview %}
 
 ### 通过 Java8 使用 Dapr
 
