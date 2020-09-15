@@ -132,4 +132,4 @@ myApp.production
 ## 相关主题
 
 - {% post_link service-invocation 服务调用概念 %}
-- {% post_link service-invocation-api 服务调用 API 规范 %}
+- {% post_link service-invocation-api 服务调用-API-规范 %}
