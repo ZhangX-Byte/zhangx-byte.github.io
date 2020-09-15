@@ -24,6 +24,8 @@ Dapr 是一个可移植的（portable）、事件驱动（event-driven）的运�
 
 ---
 
+![](/img/dapr/overview.png)
+
 我们正处于云应用浪潮中。开发者使用 Web + Database 架构（例如经典3层设计）会比较轻松，但当面对天生具备分布式属性的微服务应用架构来说可能就比较吃力了。要成为一个分布式系统专家是有难度的事情，你也没必要成为一个分布式系统专家。开发者应该专注于业务逻辑，同时依赖各种云平台以使应用程序拥有可伸缩性（scale）、容错性（resiliency）、可维护性（maintainability）、弹性（elasticity） 以及云原生架构的其它属性。
 
 这就是 Dapr 切入点。Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因此，你可以选择开发语言和框架构建可移植的应用程序。每个构建块都是独立的，你可以在你的应用程序中使用它们中的一个、几个或者所有。
@@ -31,6 +33,8 @@ Dapr 是一个可移植的（portable）、事件驱动（event-driven）的运�
 ### 云和边缘微服务构建块
 
 ---
+
+![](/img/dapr/building_blocks.png)
 
 当架构微服务应用程序时有很多东西需要考虑。而当构建微服务应用程序时 Dapr 提供常用功能的最佳实践。开发者可以按标准在微服务中使用 Dapr 提供的常用功能并且部署到任何环境。Dapr 通过提供分布式系统构建块以支撑这种能力。
 
@@ -62,9 +66,13 @@ Dapr 可以在多个环境上托管，包括为本地开发环境自托管，或
 
 自托管模式下，Dapr 作为一个隔离的边车进程运行，你的服务可以通过 HTTP 或者 gRPC 调用。自托管模式下，你也可以把 Dapr 部署到一组虚拟机下。
 
+![](/img/dapr/overview-sidecar.png)
+
 #### K8S 托管
 
 在容器托管环境比如 K8s，Dapr 以一个边车容器的方式和应用程序容器运行在同一个 pod 中。
+
+![](/img/dapr/overview-sidecar-kubernetes.png)
 
 ### 开发语言 SDKs 和框架
 
@@ -123,11 +131,15 @@ Dapr 可以配置为自托管模式以运行在你本地机器上。每一个运
 
 你可以使用 Dapr CLI 在你本地机器上运行 Dapr 启用应用程序。通过入门示例试用。
 
-#### 以 K8S 模式运行 Dapr 
+![](/img/dapr/overview_standalone.png)
+
+#### 以 K8S 模式运行 Dapr
 
 Dapr 可以配置以运行在任何 K8S 集群上。在 K8S 上 `dapr-sidecar-injector` 和 `dapr-operator` 服务提供了一流的集成，以将 Dapr 作为 sidecar 容器启动与服务容器在同一 pod 中，并提供了已配置到集群中的 Dapr 组件更新的通知。
 
 `dapr-sentry` 服务是一个证书颁发机构，可启用 Dapr 边车实例之间的相互 TLS 进行安全数据加密。有关Sentry服务的更多信息，请阅读[安全概述](https://github.com/dapr/docs/blob/master/concepts/security/README.md#dapr-to-dapr-communication)。
+
+![](/img/dapr/overview_kubernetes.png)
 
 在 Kubernetes 集群中部署并运行启用了 Dapr 的应用程序非常简单，只需在部署方案中添加一些注释即可。您可以在Kubernetes入门示例中看到一些示例。使用 Kubernetes [入门示例](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes)进行尝试。
 
