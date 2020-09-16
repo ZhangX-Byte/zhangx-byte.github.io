@@ -134,14 +134,14 @@
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
@@ -204,6 +204,129 @@
 
 <div class="post-preview">
 
+    <a href="/article/service-invocation-api/">
+        <h2 class="post-title">
+                                 
+            服务调用 API 规范
+        </h2>
+        <h3 class="post-subtitle">
+            docs/reference/api/
+        </h3>
+        <div class="post-content-preview">
+            服务调用 API 规范
+
+Dapr 给用户提供使用唯一 ID 调用其它应用程序的能力。这个功能允许应用程序通过名称标识符和其它应用程序交互，把服务发现的重担交给 Dapr 运行时。
+内容
+
+在远程 Dapr 应用程序上调用一个方法
+
+在远程 Dapr 应用程序上调用一个方法
+
+这个终端使你能够调用另一个 Dapr 应用程序启用的方法。
+HTTP 请求
+1POST/GET/PUT/DELETE......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by ZhangX on
+            2020-09-15
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
+            
+              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/invoke-and-discover-services/">
+        <h2 class="post-title">
+                                 
+            调用远程服务
+        </h2>
+        <h3 class="post-subtitle">
+            docs/howto/invoke-and-discover-services/
+        </h3>
+        <div class="post-content-preview">
+            调用远程服务
+
+在很多环境中，多个服务需要互相通讯，开发者常常会问自己以下问题：
+
+如何发现和调用不同的服务？
+如何处理重试和瞬态错误？
+如何正确使用分布式跟踪来查看调用图？
+
+Dapr 通过提供一个端点，将反向代理与内置服务发现结合起来，同时利用内置分布式跟踪和错误处理，可以使开发人员克服这些挑战。
+更多关于服务调用的信息，阅读概念文档
+为你的服务选择 ID
+Dapr 允许你为应用程序分配......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by ZhangX on
+            2020-09-15
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
+            
+              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/service-invocation/">
+        <h2 class="post-title">
+                                 
+            服务调用
+        </h2>
+        <h3 class="post-subtitle">
+            docs/concepts/service-invocation/
+        </h3>
+        <div class="post-content-preview">
+            服务调用
+Service Invocation
+
+使用服务调用 API,你的微服务可以找到其它微服务，并且在你的系统中使用标准协议（当前支持 gRPC 或者 HTTP）进行可靠通讯。
+以下是一个 Dapr 服务调用如何工作的高度概述。
+
+
+服务 A 对服务 B 发起一个 http/gRPC 请求。请求进入到本地 Dapr 边车。
+Dapr 发现服务 B 的尾制并且转发消息到服务 B 的 Da......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by ZhangX on
+            2020-09-15
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
+            
+              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/doc-overview/">
         <h2 class="post-title">
                                  
@@ -214,10 +337,13 @@
         </h3>
         <div class="post-content-preview">
             Dapr 概述
-官方文档地址
+
+Dapr overview
 Dapr 是一个可移植的（portable）、事件驱动（event-driven）的运行时框架。企业开发者使用 Dapr 可以轻松构建弹性、无状态和有状态运行在云上和边缘的微服务。并且拥抱开发语言和开发框架的多样性。
 任何开发语言、任何开发框架、运行在任何地方
-我们正处于云应用浪潮中。开发者使用 Web + Database 架构（例如经典3层设计）会比较轻松，......
+
+
+我们正处于云应用浪潮中。开发者使用 Web + Database 架构（例如经典3......
         </div>
     </a>
     
@@ -308,11 +434,11 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
     <div class="tags">
         
             
-            <a href="/tags/#Dapr" title="Dapr" rel="2">Dapr</a>
+            <a href="/tags/#Dapr" title="Dapr" rel="5">Dapr</a>
             
         
             
-            <a href="/tags/#原文翻译" title="原文翻译" rel="2">原文翻译</a>
+            <a href="/tags/#原文翻译" title="原文翻译" rel="5">原文翻译</a>
             
         
     </div>
@@ -368,6 +494,18 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
     <ul>
       
         <li>
+          <a href="/article/service-invocation-api/">服务调用 API 规范</a>
+        </li>
+      
+        <li>
+          <a href="/article/invoke-and-discover-services/">调用远程服务</a>
+        </li>
+      
+        <li>
+          <a href="/article/service-invocation/">服务调用</a>
+        </li>
+      
+        <li>
           <a href="/article/doc-overview/">Dapr 概述</a>
         </li>
       
@@ -387,7 +525,7 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>

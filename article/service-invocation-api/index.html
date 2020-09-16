@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          简介 - ZhangX | Dapr
+          服务调用 API 规范 - ZhangX | Dapr
         
     </title>
 
-    <link rel="canonical" href="http://www.huweihuang.com/article/dapr-readme/">
+    <link rel="canonical" href="http://www.huweihuang.com/article/service-invocation-api/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
                             
                         </div>
-                        <h1>简介</h1>
-                        <h2 class="subheading">Dapr 源码 readme</h2>
+                        <h1>服务调用 API 规范</h1>
+                        <h2 class="subheading">docs/reference/api/</h2>
                         <span class="meta">
                             Posted by ZhangX on
-                            2020-09-11
+                            2020-09-15
                         </span>
                     </div>
                 
@@ -207,19 +207,77 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="介绍">介绍</h2>
-<p><a href="https://github.com/dapr/dapr" target="_blank" rel="noopener">官方文档地址</a></p>
-<p>Dapr（Distributed Application Runtime） 是一个可移植的（portable）、事件驱动（event-driven）的运行时框架。开发者通过 Dapr 可以构建弹性、无状态、有状态的运行在云上和边缘的微服务。并且拥抱开发语言和开发框架的多样性。</p>
-<p>Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因此，你可以选择开发语言和框架构建可移植的应用程序。每个构建块都是独立的，你可以在你的应用程序中使用它们中的一个、几个或者所有。</p>
+                <h2 id="服务调用-api-规范">服务调用 API 规范</h2>
 <hr>
-<h3 id="如何工作">如何工作</h3>
-<p>Dapr 注入一个边车(side-car)(通过容器或者进程注入)到每一个计算单元。边车通过事件触发器交互，和计算单元通过 HTTP 或者 gRPC 协议通信。这使得 Dapr 支持现有和未来的开发语言而不需要你导入框架或者库。</p>
-<p>Dapr 通过标准 HTTP 动词或者 gRPC 接口提供内建状态管理、可靠消息（至少一次投递）、触发器和绑定。这表示你可以遵循相同的编程范式写无状态、有状态和类似 Actor 模型的服务。你可以自由的选择一致性模型、线程模型和消息传递模式。</p>
-<p>Dapr 在 K8S 上原生运行，作为自托管二进制文件在你的机器上、物联网设备上运行，或者做为一个容器注入到云或本地的任何系统中。</p>
-<p>Dapr 使用可插拔组件状态存储和消息总线，例如：Redis、gRPC 以提供一系列通信方法，包括使用 gRPC 完成 dapr 到 dapr 的直接通信，异步 Pub-sub 以保证消息传递至少一次的语义。</p>
-<h3 id="为什么使用-dapr">为什么使用 Dapr</h3>
-<p>高性能、可扩展并且可靠的分布式应用是很困难的。而 Dapr 提供已经验证过的模式和实践方式。它把事件驱动和参与者语义统一成一个简单、一致的编程模型。它支持所有编程语言并且不限定编程框架。 你不必面对底层函数比如线程、并发控制、分区和缩放。事实上，你只需要选择一个你熟悉的 Web 框架实现一个简单的 Web 服务。</p>
-<p>Dapr 在线程和状态一致性模型方面很灵活。 你可以选择多个线程，并且在不同的一致性模型中选择。这种灵活性使你可以实现高级使用场景而不需要人工约束。Dapr 是独一无二的，因为你可以在平台和基础实现之间无缝过渡，而无需重写代码。</p>
+<p>Dapr 给用户提供使用唯一 ID 调用其它应用程序的能力。这个功能允许应用程序通过名称标识符和其它应用程序交互，把服务发现的重担交给 Dapr 运行时。</p>
+<h3 id="内容">内容</h3>
+<ul>
+<li>在远程 Dapr 应用程序上调用一个方法</li>
+</ul>
+<h3 id="在远程-dapr-应用程序上调用一个方法">在远程 Dapr 应用程序上调用一个方法</h3>
+<hr>
+<p>这个终端使你能够调用另一个 Dapr 应用程序启用的方法。</p>
+<h4 id="http-请求">HTTP 请求</h4>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST/GET/PUT/DELETE http://localhost:&lt;daprPort&gt;/v1.<span class="number">0</span>/invoke/&lt;appId&gt;/method/&lt;method-name&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="http-应答编码">HTTP 应答编码</h4>
+<p>当一个服务通过 Dapr 调用另一个服务时，被调用的服务状态码会返回给调用方。如果有网络错误或者其它瞬态错误， Dapr 将会返回 <code>500</code> 错误并带着详细错误信息。</p>
+<p>如果用户通过HTTP调用Dapr来与启用了gRPC的服务对话，被调用的 gRPC 服务错误返回 <code>500</code> ，成功返回 <code>200OK</code>。</p>
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>500</td>
+<td>请求失败</td>
+</tr>
+</tbody>
+</table>
+<h4 id="url-参数">URL 参数</h4>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<p>daprPort｜Dapr 端口<br>
+appId｜远程应用程序 ID<br>
+method-name｜调用远程应用程序的方法名称或者 url</p>
+<h4 id="请求内容">请求内容</h4>
+<p>在请求中，你可以传递请求头：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"Content-Type"</span>: <span class="string">"application/json"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在请求消息体中放置你想发送到服务的数据：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"arg1"</span>: <span class="number">10</span>,</span><br><span class="line">  <span class="attr">"arg2"</span>: <span class="number">23</span>,</span><br><span class="line">  <span class="attr">"operator"</span>: <span class="string">"+"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="通过调用服务接收请求">通过调用服务接收请求</h4>
+<p>一旦你的服务代码通过 Dapr 调用另一个服务启用的方法，Dapr 将会发送请求（伴随着请求头和消息体）到应用的 <code>&lt;method-name&gt;</code> 终端。</p>
+<p>被调用的 Dapr 应用程序监听并且在那个终端应答请求。</p>
+<h4 id="跨命名空间调用">跨命名空间调用</h4>
+<p>在支持命名空间的托管平台，Dapr 应用程序 ID 遵循有效的 FQDN（Fully Qualified Domain Name，全限定域名）转换，包含目标命名空间。例如，以下字符串包含应用程序 ID（myApp），此外应用程序运行的命名空间（production）。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myApp.production</span><br></pre></td></tr></table></figure>
+<p>支持命名空间平台</p>
+<ul>
+<li>K8S</li>
+</ul>
+<h4 id="示例">示例</h4>
+<p>调用 <code>mathService</code> 中的 <code>add</code> 方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost:3500/v1.0/invoke/mathService/method/add \</span><br><span class="line">  -H &quot;Content-Type: application/json&quot;</span><br><span class="line">  -d &apos;&#123; &quot;arg1&quot;: 10, &quot;arg2&quot;: 23&#125;&apos;</span><br></pre></td></tr></table></figure>
+<p><code>mathService</code> 服务需要监听 <code>/add</code> 终端以接收和处理请求。</p>
+<p>Node 应用程序像这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.post(&apos;/add&apos;, (req, res) =&gt; &#123;</span><br><span class="line">  let args = req.body;</span><br><span class="line">  const [operandOne, operandTwo] = [Number(args[&apos;arg1&apos;]), Number(args[&apos;arg2&apos;])];</span><br><span class="line">  </span><br><span class="line">  let result = operandOne + operandTwo;</span><br><span class="line">  res.send(result.toString());</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(port, () =&gt; console.log(`Listening on port $&#123;port&#125;!`));</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>远程终端应答将在应答消息体中返回。</p>
+</blockquote>
+<p>如果你的服务监听路径嵌套较多（比如：<code>/api/v1/add</code>），Dapr 实现了完整的反向代理，所以你可以追加所有需要的路径分段到你的请求 URL 里，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:3500/v1.0/invoke/mathService/method/api/v1/add</span><br></pre></td></tr></table></figure>
+<p>如果你调用的 <code>mathService</code> 在不同的命名空间中，你可以使用下列 URL：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:3500/v1.0/invoke/mathService.testing/method/api/v1/add</span><br></pre></td></tr></table></figure>
+<p>在这个 URL 中，<code>testing</code> 是 <code>mathService</code> 运行的命名空间。</p>
 
                 
 
@@ -227,10 +285,10 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/doc-overview/" data-toggle="tooltip" data-placement="top" title="Dapr 概述">&larr; Previous Post</a>
-                        </li>
                     
+                        <li class="next">
+                            <a href="/article/invoke-and-discover-services/" data-toggle="tooltip" data-placement="top" title="调用远程服务">Next Post &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -274,7 +332,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4ECB;&#x7ECD;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#如何工作"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x5DE5;&#x4F5C;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#为什么使用-dapr"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x4E3A;&#x4EC0;&#x4E48;&#x4F7F;&#x7528; Dapr</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#服务调用-api-规范"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x670D;&#x52A1;&#x8C03;&#x7528; API &#x89C4;&#x8303;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内容"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5185;&#x5BB9;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#在远程-dapr-应用程序上调用一个方法"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5728;&#x8FDC;&#x7A0B; Dapr &#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E0A;&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#http-请求"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">HTTP &#x8BF7;&#x6C42;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#http-应答编码"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">HTTP &#x5E94;&#x7B54;&#x7F16;&#x7801;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#url-参数"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">URL &#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#请求内容"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">&#x8BF7;&#x6C42;&#x5185;&#x5BB9;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#通过调用服务接收请求"><span class="toc-nav-number">1.2.5.</span> <span class="toc-nav-text">&#x901A;&#x8FC7;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x63A5;&#x6536;&#x8BF7;&#x6C42;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#跨命名空间调用"><span class="toc-nav-number">1.2.6.</span> <span class="toc-nav-text">&#x8DE8;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x8C03;&#x7528;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#示例"><span class="toc-nav-number">1.2.7.</span> <span class="toc-nav-text">&#x793A;&#x4F8B;</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>

@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          ZhangX | Dapr
+          服务调用 - ZhangX | Dapr
         
     </title>
 
-    <link rel="canonical" href="http://www.huweihuang.com/archives/">
+    <link rel="canonical" href="http://www.huweihuang.com/article/service-invocation/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/archives-widget.jpg')
-            /*page*/
+            background-image: url('/img/dapr/dapr.svg')
+            /*post*/
         
     }
     
@@ -85,10 +85,20 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="site-heading">
-                        <h1>ZhangX</h1>
-                        <!--<hr class="small">-->
-                        <span class="subheading">One step at a time.</span>
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Dapr" title="Dapr">Dapr</a>
+                            
+                              <a class="tag" href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
+                            
+                        </div>
+                        <h1>服务调用</h1>
+                        <h2 class="subheading">docs/concepts/service-invocation/</h2>
+                        <span class="meta">
+                            Posted by ZhangX on
+                            2020-09-15
+                        </span>
                     </div>
                 
 
@@ -184,270 +194,198 @@
 
 
     <!-- Main Content -->
-    <!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
+    <!-- Modify by Yu-Hsuan Yen -->
 
-<!-- USE SIDEBAR -->
-    <!-- Post Container -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-            
-                
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 archive">
-            <!-- 归档列表 -->
-            
-            
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-             <!-- 归档列表 -->
+                <h2 id="服务调用">服务调用</h2>
+<p><a href="https://github.com/dapr/docs/tree/master/concepts/service-invocation" target="_blank" rel="noopener">Service Invocation</a></p>
+<hr>
+<p>使用服务调用 API,你的微服务可以找到其它微服务，并且在你的系统中使用标准协议（当前支持 gRPC 或者 HTTP）进行可靠通讯。</p>
+<p>以下是一个 Dapr 服务调用如何工作的高度概述。</p>
+<p><img src="/img/dapr/service-invocation.png" alt=""></p>
+<ol>
+<li>服务 A 对服务 B 发起一个 http/gRPC 请求。请求进入到本地 Dapr 边车。</li>
+<li>Dapr 发现服务 B 的尾制并且转发消息到服务 B 的 Dapr 边车。</li>
+<li>服务 B 的 Dapr 边车转发请求到服务 B 。服务 B 执行它的业务逻辑响应。</li>
+<li>服务 B 发送一个响应到服务 A 。这个响应进入到服务 B 的边车。</li>
+<li>Dapr 转发响应到服务 A 的 Dapr 边车。</li>
+<li>服务 A 接收响应。</li>
+</ol>
+<p>作为上面的内容描述的例子，假设我们有以下示例描述的应用程序集合，一个 python 应用程序调用一个 Noed.js 应用程序：<a href="https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/README.md" target="_blank" rel="noopener">https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/README.md</a></p>
+<p>在这样的情景下，python 应用程序作为上面提到的“服务 A”，Node.js 应用程序作为&quot;服务 B&quot;。</p>
+<p>在例子的上下文中，以下1-6项再一次描述：</p>
+<ol>
+<li>假设 Node.js 应用程序有一个 Dapr 应用程序 id “nodeapp”，如示例所示。python 应用程序通过 <a href="http://localhost:3500/v1.0/invoke/nodeapp/method/neworder" target="_blank" rel="noopener">http://localhost:3500/v1.0/invoke/nodeapp/method/neworder</a> 调用 Node.js 应用程序的 neworder 方法，它首先进入 python 应用程序的本地 Dapr 边车。</li>
+<li>Dapr 发现 Node.js 应用程序的位置并且转发请求到 Node.js 应用程序的边车。</li>
+<li>Node.js 应用程序的边车转发请求到 Node.js 应用程序。Node.js 应用程序执行它的业务逻辑（就像在示例中描述的一样）记录进入的消息然后持久化订单 ID 到 Redis 中（上面的图中未显示）。</li>
+</ol>
+<p>第 4-5 步和上面列表一样。</p>
+<h2 id="下一步">下一步</h2>
+<hr>
+<p>如果你已经准备好开始了，跟着这个指引概述<a href="">如何开始一个服务调用</a></p>
+<p>如果你想要知道更多关于服务调用如何工作的技术细节，异步到<a href="">API 规范</a></p>
 
-            
-            <div class="one-tag-list">
-                <span class="fa fa-calendar-times-o listing-seperator" id="2020">
-                    <span class="tag-text">2020</span>
-                </span>
-                <ul>
                 
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    09-15
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/article/service-invocation-api/" style="color: #0085a1">
-                        <span>
-                            服务调用 API 规范
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    09-15
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/article/invoke-and-discover-services/" style="color: #0085a1">
-                        <span>
-                            调用远程服务
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    09-15
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/article/service-invocation/" style="color: #0085a1">
-                        <span>
-                            服务调用
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    09-11
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/article/doc-overview/" style="color: #0085a1">
-                        <span>
-                            Dapr 概述
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    09-11
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/article/dapr-readme/" style="color: #0085a1">
-                        <span>
-                            简介
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/invoke-and-discover-services/" data-toggle="tooltip" data-placement="top" title="调用远程服务">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/doc-overview/" data-toggle="tooltip" data-placement="top" title="Dapr 概述">Next Post &rarr;</a>
+                        </li>
+                    
                 </ul>
-            </div>
-            
-
-
-        </div>
-    </div>
-</div>
-
-<style type="text/css">
-
-   @media (min-width: 992px) {
-   .archive {
-       margin-left: 8.33333333%;
-       padding-right: 26.333333%;
-   }
-}
-</style>
-
-<style type="text/css">
-   @media (min-width: 1200px){
-   .archive {
-   margin-left: 16.66666667%;
-   padding-right: 16.666667%;
-   }
-}
-</style>
-
 
                 <br>
 
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
                 <!-- require APlayer -->
                 
 
-                <!-- 如果开启评论功能 -->
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#服务调用"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x670D;&#x52A1;&#x8C03;&#x7528;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#下一步"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4E0B;&#x4E00;&#x6B65;</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Dapr" title="Dapr">Dapr</a>
+                        
+                          <a class="tag" href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
                 
             </div>
-
-          <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-        <!-- Featured Tags -->
-
-<section>
-    <!-- no hr -->
-    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-    <div class="tags">
-        
-            
-            <a href="/tags/#Dapr" title="Dapr" rel="5">Dapr</a>
-            
-        
-            
-            <a href="/tags/#原文翻译" title="原文翻译" rel="5">原文翻译</a>
-            
-        
+        </div>
     </div>
-</section>
+</article>
 
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-    <h5><a href="/about/">ABOUT ME</a></h5>
-    <div class="short-about">
 
-        
-            <img id = "avatar_pic" src="/img/avatar/head.jpg" />
-        
 
-        
-            <p>Do some thing.</p>
-        
 
-        <!-- SNS Link -->
-        <ul class="list-inline">
-            
-            
-            
 
-            
 
-            
 
-            
-                <li>
-                    <a target="_blank"  href="https://github.com/ZhangX-Byte">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
-            
-            
-            
-        </ul>
-    </div>
-</section>
 
-        <hr>
-    
-        
-  <h5>RECENT POSTS</h3>
-  <div class="widget">
-    <ul>
-      
-        <li>
-          <a href="/article/service-invocation-api/">服务调用 API 规范</a>
-        </li>
-      
-        <li>
-          <a href="/article/invoke-and-discover-services/">调用远程服务</a>
-        </li>
-      
-        <li>
-          <a href="/article/service-invocation/">服务调用</a>
-        </li>
-      
-        <li>
-          <a href="/article/doc-overview/">Dapr 概述</a>
-        </li>
-      
-        <li>
-          <a href="/article/dapr-readme/">简介</a>
-        </li>
-      
-    </ul>
-  </div>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
-        <hr>
-    
-        <!-- Friends Blog -->
 
-        <hr>
-    
-        
-    <h5>ARCHIVES</h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">5</span></li></ul>
-    </div>
-
-        <hr>
-    
-</div>
-
-        
-    </div>
-</div>
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
 
 
     <!-- Footer -->
