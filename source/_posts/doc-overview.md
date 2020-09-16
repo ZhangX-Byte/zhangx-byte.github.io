@@ -42,7 +42,7 @@ Dapr 是一个可移植的（portable）、事件驱动（event-driven）的运�
 
 构建块|描述
 --|--
-服务调用（Service Invocation）| 容错 service-to-service invocation 使方法调用（包括重试调用）远程服务，无论这些服务位于任何被支持的托管环境。
+{% post_link service-invocation 服务调用（Service Invocation） %}| 容错 service-to-service invocation 使方法调用（包括重试调用）远程服务，无论这些服务位于任何被支持的托管环境。
 状态管理（State Management）| 通过状态管理存储键/值对，可以同时在你的应用程序中实现长时间运行、高可用、有状态服务和无状态服务。状态存储是可插拔的并且可以使用 Azure CosmosDB， Azure SQL Server， PostgreSQL， AWS DynamoDB 或者 Redis。
 发布和订阅消息（Publish and Subscribe Messaging）| 发布事件和订阅主题。
 资源绑定（Resource Bindings）| 带有触发器的资源绑定进一步构建在事件驱动的架构之上，通过从任何外部源(如数据库、队列、文件系统等)接收和发送事件来实现伸缩性和容错性。
