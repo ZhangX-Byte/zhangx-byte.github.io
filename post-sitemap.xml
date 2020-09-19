@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://www.huweihuang.com/article/environment-setup/</loc>
+        <lastmod>2020-09-19T09:51:11.618Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://www.huweihuang.com/article/dapr-doc/</loc>
         <lastmod>2020-09-17T08:49:00.743Z</lastmod>
         <changefreq>weekly</changefreq>

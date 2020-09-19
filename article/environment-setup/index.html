@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Dapr 文档 - ZhangX | Dapr
+          环境设置 - ZhangX | Dapr
         
     </title>
 
-    <link rel="canonical" href="http://www.huweihuang.com/article/dapr-doc/">
+    <link rel="canonical" href="http://www.huweihuang.com/article/environment-setup/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
                             
                         </div>
-                        <h1>Dapr 文档</h1>
-                        <h2 class="subheading">dapr/docs</h2>
+                        <h1>环境设置</h1>
+                        <h2 class="subheading">docs/getting-started/environment-setup</h2>
                         <span class="meta">
                             Posted by ZhangX on
-                            2020-09-17
+                            2020-09-19
                         </span>
                     </div>
                 
@@ -207,48 +207,88 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="dapr-文档">Dapr 文档</h2>
+                <h2 id="环境设置">环境设置</h2>
 <hr>
+<p>Dapr 既可以使用自托管模式运行也可以运行在 K8S 模式下。通过自托管模式运行 Dapr 运行时使你可以在本地开发环境开发 Dapr 应用程序，然后部署到其它支持 Dapr 运行的环境。例如：你可以在自托管模式下开发 Dapr 应用程序然后把应用程序部署到任何 K8S 集群。</p>
 <h3 id="内容">内容</h3>
-<table>
-<thead>
-<tr>
-<th>主题</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="/article/doc-overview/" title="概述">概述</a></td>
-<td>Dapr 概述以及你如何使用它构建事件驱动、分部署应用程序</td>
-</tr>
-<tr>
-<td><a href="/article/getting-started/" title="快速开始">快速开始</a></td>
-<td>设置你的开发环境</td>
-</tr>
-<tr>
-<td>概念</td>
-<td>Dapr 概念解释</td>
-</tr>
-<tr>
-<td>如何做</td>
-<td>指导解释如何完成指定的任务</td>
-</tr>
-<tr>
-<td>最佳实践</td>
-<td>指导解释使用 Dapr 最佳实践</td>
-</tr>
-<tr>
-<td>引用</td>
-<td>API 和绑定引用文档</td>
-</tr>
-<tr>
-<td>FAQ</td>
-<td>常见问答</td>
-</tr>
-</tbody>
-</table>
-<h3 id="更多文档">更多文档</h3>
+<hr>
+<ul>
+<li><a href="#%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE">环境设置</a>
+<ul>
+<li><a href="#%E5%86%85%E5%AE%B9">内容</a></li>
+<li><a href="#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6">先决条件</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85-dapr-%E5%91%BD%E4%BB%A4%E8%A1%8C">安装 Dapr 命令行</a>
+<ul>
+<li><a href="#windows">Windows</a></li>
+<li><a href="#linux">Linux</a></li>
+<li><a href="#macos">MacOS</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%89%88%E6%9C%AC">通过二进制版本</a></li>
+</ul>
+</li>
+<li><a href="#%E8%87%AA%E6%89%98%E7%AE%A1%E6%A8%A1%E5%BC%8F%E5%AE%89%E8%A3%85-dapr">自托管模式安装 Dapr</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2%E5%88%9D%E5%A7%8B%E5%8C%96-dapr">使用命令行界面初始化 Dapr</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E8%BF%90%E8%A1%8C%E6%97%B6%E7%89%88%E6%9C%AC">安装指定运行时版本</a></li>
+<li><a href="#%E8%87%AA%E6%89%98%E7%AE%A1%E6%A8%A1%E5%BC%8F%E5%8D%B8%E8%BD%BD-dapr">自托管模式卸载 Dapr</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="先决条件">先决条件</h3>
+<hr>
+<p>默认情况下，Dapr 使用 Docker 容器安装开发环境以便你轻松上手。然而，Dapr 不依赖 Docker 运行（查看【这里】介绍使用 Docker 轻量化初始本地安装 Dapr）。这个入门指南假设 Dapr 是和开发人员环境一起安装的。</p>
+<ul>
+<li>安装 <a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a></li>
+</ul>
+<blockquote>
+<p>Windows 用户，确保 <code>Docker Desktop For Windows</code> 使用 Linux 容器。</p>
+</blockquote>
+<h3 id="安装-dapr-命令行">安装 Dapr 命令行</h3>
+<hr>
+<p>使用脚本安装最新版本</p>
+<h4 id="windows">Windows</h4>
+<p>安装最新的 windows Dapr 命令行界面到  <code>c:\dapr</code> 并添加这个文件夹到 User Path 环境变量中。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell -Command <span class="string">"iwr -useb https://raw.githubusercontent.com/dapr/cli/master/install/install.ps1 | iex"</span></span><br></pre></td></tr></table></figure>
+<h4 id="linux">Linux</h4>
+<p>安装最新的 linux Dapr 命令行界面到 <code>/usr/local/bin</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash</span><br></pre></td></tr></table></figure>
+<h4 id="macos">MacOS</h4>
+<p>安装最新的 darwin Dapr 命令行界面到 <code>/usr/local/bin</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://raw.githubusercontent.com/dapr/cli/master/install/install.sh | /bin/bash</span><br></pre></td></tr></table></figure>
+<p>或者使用 Homebrew 安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install dapr/tap/dapr-cli</span><br></pre></td></tr></table></figure>
+<h4 id="通过二进制版本">通过二进制版本</h4>
+<p>Dapr 命令行界面每个发布版本都包含各种系统和架构。这些二进制版本可以手动下载和安装。</p>
+<ol>
+<li>下载<a href="https://github.com/dapr/cli/releases" target="_blank" rel="noopener">Dapr 命令行界面</a></li>
+<li>解压（例如：dapr_linux_amd64.tar.gz, dapr_windows_amd64.zip）</li>
+<li>把解压后文件移动到你希望的位置。
+<ul>
+<li>Linux/MacOS - /usr/local/bin</li>
+<li>Windows，创建一个文件夹并添加文件夹路径到系统路径中。例如：创建一个文件夹 <code>c:\dapr</code> 并把文件夹路径加入到系统环境变量中。</li>
+</ul>
+</li>
+</ol>
+<h3 id="自托管模式安装-dapr">自托管模式安装 Dapr</h3>
+<hr>
+<h4 id="使用命令行界面初始化-dapr">使用命令行界面初始化 Dapr</h4>
+<p>默认情况下，初始化 Dapr 命令行界面过程中会安装 Dapr 二进制文件，同时设置一个开发者环境以帮助你轻松上手 Dapr。这个环境使用 Docker 容器，因此 Docker 列入到先决条件中。</p>
+<blockquote>
+<p>如果你不想使用这个环境并且不依赖 Docker 运行 Dapr，查看命令行界面<a href="https://github.com/dapr/cli/blob/master/README.md" target="_blank" rel="noopener">文档</a>，当使用 init 命令时同时使用 <code>--slim</code> 命令。注意，如果你时一个新手，强烈推荐安装 Docker 并且使用常规初始化（init）命令。<br>
+对于 Linux 用户，如果你运行 docker 命令使用 sudo 或者安装路径时 <code>/usr/local/bin</code> （默认安装路径），你需要使用“sudo dapr init”。对于 Windows 用户，确保你使用管理员模式运行命令行终端。注意：查看[Dapr 命令行界面]以了解使用 Dapr 命令行界面的细节。</p>
+</blockquote>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ dapr init</span><br><span class="line">⌛  Making the jump to hyperspace...</span><br><span class="line">Downloading binaries and setting up components</span><br><span class="line">✅  Success! Dapr is up and running. To get started, go here: https://aka.ms/dapr-getting-started</span><br></pre></td></tr></table></figure>
+<p>查看 Dapr 安装成功，从命令提示符中运行 <code>docker ps</code> 命令并检查 <code>daprio/dapr:latest</code> 和 <code>redis</code> 容器镜像同时在运行。</p>
+<h4 id="安装指定运行时版本">安装指定运行时版本</h4>
+<p>你可以安装或升级到指定版本的 Dapr 运行时，通过使用 <code>dapr init --runtime-version</code> 。在 <a href="https://github.com/dapr/dapr/releases" target="_blank" rel="noopener">Dapr 发布版本</a>列表中查找。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Install v0.<span class="number">1</span>.<span class="number">0</span> runtime</span><br><span class="line">$ dapr init --runtime-version <span class="number">0</span>.<span class="number">1</span>.<span class="number">0</span></span><br><span class="line"></span><br><span class="line"># Check the versions of cli and runtime</span><br><span class="line">$ dapr --version</span><br><span class="line">cli version: v0.<span class="number">1</span>.<span class="number">0</span></span><br><span class="line">runtime version: v0.<span class="number">1</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h4 id="自托管模式卸载-dapr">自托管模式卸载 Dapr</h4>
+<p>卸载将移除放置服务的容器或放置服务的二进制文件。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$dapr uninstall</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于 Linux 用户，如果你运行你的 docker 命令通过 sudo 或者安装路径为 <code>/usr/local/bin</code>（默认路径），你需要使用 <code>sudo dapr uninstall</code> 移除 dapr 二进制文件或者容器。</p>
+</blockquote>
 
                 
 
@@ -256,13 +296,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/environment-setup/" data-toggle="tooltip" data-placement="top" title="环境设置">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/getting-started/" data-toggle="tooltip" data-placement="top" title="入门">Next Post &rarr;</a>
+                            <a href="/article/dapr-doc/" data-toggle="tooltip" data-placement="top" title="Dapr 文档">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -302,12 +338,18 @@
             <!-- Table of Contents -->
 
   
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
     
       <aside id="sidebar">
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#dapr-文档"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Dapr &#x6587;&#x6863;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内容"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5185;&#x5BB9;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#更多文档"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x66F4;&#x591A;&#x6587;&#x6863;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#环境设置"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x73AF;&#x5883;&#x8BBE;&#x7F6E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内容"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5185;&#x5BB9;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#先决条件"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5148;&#x51B3;&#x6761;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#安装-dapr-命令行"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x5B89;&#x88C5; Dapr &#x547D;&#x4EE4;&#x884C;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#windows"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">Windows</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#linux"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">Linux</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#macos"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">MacOS</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#通过二进制版本"><span class="toc-nav-number">1.3.4.</span> <span class="toc-nav-text">&#x901A;&#x8FC7;&#x4E8C;&#x8FDB;&#x5236;&#x7248;&#x672C;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#自托管模式安装-dapr"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x81EA;&#x6258;&#x7BA1;&#x6A21;&#x5F0F;&#x5B89;&#x88C5; Dapr</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#使用命令行界面初始化-dapr"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x754C;&#x9762;&#x521D;&#x59CB;&#x5316; Dapr</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#安装指定运行时版本"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">&#x5B89;&#x88C5;&#x6307;&#x5B9A;&#x8FD0;&#x884C;&#x65F6;&#x7248;&#x672C;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#自托管模式卸载-dapr"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">&#x81EA;&#x6258;&#x7BA1;&#x6A21;&#x5F0F;&#x5378;&#x8F7D; Dapr</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>
