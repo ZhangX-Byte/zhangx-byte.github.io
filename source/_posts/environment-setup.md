@@ -170,7 +170,7 @@ Dapr 安装以下 pods：
 你可以在任何 K8S 集群安装 Dapr 。以下是一些有用的链接：
 
 - {% post_link setup-minikube Setup Minikube Cluster %}
-- [Setup Azure Kubernetes Service Cluster](https://github.com/dapr/docs/blob/master/getting-started/cluster/setup-aks.md)
+- {% post_link setup-aks Setup Azure Kubernetes Service Cluster %}
 - [Setup Google Cloud Kubernetes Engine](https://cloud.google.com/kubernetes-engine/docs/quickstart)
 - [Setup Amazon Elastic Kubernetes Service](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
 
