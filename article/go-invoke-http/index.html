@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Dapr Golang HTTP 调用 - ZhangX | Dapr
+        
+    </title>
+
+    <link rel="canonical" href="http://www.huweihuang.com/article/go-invoke-http/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/golang/golang.jpeg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Dapr" title="Dapr">Dapr</a>
+                            
+                              <a class="tag" href="/tags/#Go" title="Go">Go</a>
+                            
+                        </div>
+                        <h1>Dapr Golang HTTP 调用</h1>
+                        <h2 class="subheading">go_invoke_http</h2>
+                        <span class="meta">
+                            Posted by ZhangX on
+                            2020-11-04
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ZhangX</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="版本介绍">版本介绍</h2>
+<ul>
+<li>Go 版本：1.15</li>
+<li>Dapr Go SKD 版本：0.11.1</li>
+</ul>
+<h2 id="工程结构">工程结构</h2>
+<p><img src="/img/golang/1.png" alt="工程结构"></p>
+<p>从上图可知，新建 3 个 Go 启动项目,cmd 为启动项目目录，其中 client/a/main.go 为客户端，用于调用服务。service/http/b、service/http/c 为服务项目。调用路径如下图所示。</p>
+<pre class="mermaid">graph LR;
+    go-client-a--1-->go-service-b;
+    go-service-b--2-->go-service-c;
+    go-service-c--3-->go-service-b;
+    go-service-b--4-->go-client-a;</pre>
+<ol>
+<li>go-client-a 作为客户端调用服务 go-service-b;</li>
+<li>go-service-b 作为服务中转，既收来自 go-client-a 客户端的请求，又发起对 go-service-c 的调用;</li>
+<li>go-service-c 响应 go-service-b 的请求；</li>
+<li>go-service-b 响应 go-client-a 的请求。</li>
+</ol>
+<h3 id="internal">internal</h3>
+<p>response.go 文件，封装返回数据。数据结构如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> internal</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"encoding/json"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> HttpResult <span class="keyword">struct</span> &#123;</span><br><span class="line">	Message <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *HttpResult)</span> <span class="title">ToBytes</span><span class="params">()</span> <span class="params">(bytes []<span class="keyword">byte</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> err error</span><br><span class="line">	bytes, err = json.Marshal(r)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">"数据转换失败"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="go-service-c">go-service-c</h2>
+<p>go-service-c 做为调用链路末端，只需要提供监听端口，以及绑定路由。下面方法通过 <code>s.AddServiceInvocationHandler(&quot;/hello&quot;, helloHandler)</code> 方法绑定路由和处理方法。以下为 go-service-c 源码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"context"</span></span><br><span class="line">	<span class="string">"errors"</span></span><br><span class="line">	<span class="string">"github.com/Zhang-Byte/dapr-golang/internal"</span></span><br><span class="line">	<span class="string">"github.com/dapr/go-sdk/service/common"</span></span><br><span class="line">	daprd <span class="string">"github.com/dapr/go-sdk/service/http"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := daprd.NewService(<span class="string">":9003"</span>)</span><br><span class="line">	<span class="keyword">if</span> err := s.AddServiceInvocationHandler(<span class="string">"/hello"</span>, helloHandler); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">"error adding invocation handler: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err := s.Start(); err != <span class="literal">nil</span> &amp;&amp; err != http.ErrServerClosed &#123;</span><br><span class="line">		log.Fatalf(<span class="string">"error listenning: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">helloHandler</span><span class="params">(_ context.Context, in *common.InvocationEvent)</span> <span class="params">(out *common.Content, err error)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> in == <span class="literal">nil</span> &#123;</span><br><span class="line">		err = errors.New(<span class="string">"invocation parameter required"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	log.Printf(<span class="string">"The go-service-c service method hello has been invoked,recieve message is %v"</span>, <span class="keyword">string</span>(in.Data))</span><br><span class="line">	httpResult := internal.HttpResult&#123;Message: <span class="string">"This message is from Service C."</span>&#125;</span><br><span class="line">	out = &amp;common.Content&#123;</span><br><span class="line">		Data:        httpResult.ToBytes(),</span><br><span class="line">		ContentType: in.ContentType,</span><br><span class="line">		DataTypeURL: in.DataTypeURL,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启动命令：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dapr run --app-id go-service-c \</span><br><span class="line">         --app-protocol http \</span><br><span class="line">         --app-port <span class="number">9003</span> \</span><br><span class="line">         --dapr-http-port <span class="number">3501</span> \</span><br><span class="line">         --log-level debug \</span><br><span class="line">         --components-<span class="built_in">path</span> ./config \</span><br><span class="line">         go run ./<span class="built_in">cmd</span>/service/http/c/main.go</span><br></pre></td></tr></table></figure>
+<h2 id="go-service-b">go-service-b</h2>
+<p>go-service-b 相较于 go-service-c 的代码来说，添加了初始化客户端并发送请求的内容。查看代码 <code>invokeService()</code> 每次都会调用 <code>client()</code>,在 <code>client()</code> 中方法看上去每次都会新建一个客户端，查看 dapr 源码注释可知(Note, this default factory function creates Dapr client only once. All subsequent invocations will return the already created instance. ) 每次只会返回已经创建好的实例，因此使用完以后不必关闭此客户端。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"context"</span></span><br><span class="line">	<span class="string">"encoding/json"</span></span><br><span class="line">	<span class="string">"errors"</span></span><br><span class="line">	<span class="string">"github.com/Zhang-Byte/dapr-golang/internal"</span></span><br><span class="line">	dapr <span class="string">"github.com/dapr/go-sdk/client"</span></span><br><span class="line">	<span class="string">"github.com/dapr/go-sdk/service/common"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">import</span> daprd <span class="string">"github.com/dapr/go-sdk/service/http"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := daprd.NewService(<span class="string">":9002"</span>)</span><br><span class="line">	<span class="keyword">if</span> err := s.AddServiceInvocationHandler(<span class="string">"/hello"</span>, helloHandler); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">"error adding invocation handler: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err := s.Start(); err != <span class="literal">nil</span> &amp;&amp; err != http.ErrServerClosed &#123;</span><br><span class="line">		log.Fatalf(<span class="string">"error listenning: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">helloHandler</span><span class="params">(ctx context.Context, in *common.InvocationEvent)</span> <span class="params">(out *common.Content, err error)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> in == <span class="literal">nil</span> &#123;</span><br><span class="line">		err = errors.New(<span class="string">"invocation parameter required"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	log.Printf(<span class="string">"The go-service-b service method hello has been invoked,recieve message is %v"</span>, <span class="keyword">string</span>(in.Data))</span><br><span class="line"></span><br><span class="line">	msg := invokeService(ctx)</span><br><span class="line">	httpResult := internal.HttpResult&#123;Message: msg&#125;</span><br><span class="line"></span><br><span class="line">	out = &amp;common.Content&#123;</span><br><span class="line">		Data:        httpResult.ToBytes(),</span><br><span class="line">		ContentType: in.ContentType,</span><br><span class="line">		DataTypeURL: in.DataTypeURL,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">invokeService</span><span class="params">(ctx context.Context)</span> <span class="params">(msg <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	client := client()</span><br><span class="line">	content := &amp;dapr.DataContent&#123;</span><br><span class="line">		ContentType: <span class="string">"text/plain"</span>,</span><br><span class="line">		Data:        []<span class="keyword">byte</span>(<span class="string">"This is golang Service B."</span>),</span><br><span class="line">	&#125;</span><br><span class="line">	resp, err := client.InvokeServiceWithContent(ctx, <span class="string">"go-service-c"</span>, <span class="string">"hello"</span>, content)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> result internal.HttpResult</span><br><span class="line">	<span class="keyword">if</span> err := json.Unmarshal(resp, &amp;result); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Printf(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line">	msg = result.Message</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">client</span><span class="params">()</span> <span class="title">dapr</span>.<span class="title">Client</span></span> &#123;</span><br><span class="line">	client, err := dapr.NewClient()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> client</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启动命令：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dapr run --app-id go-service-b \</span><br><span class="line">         --app-protocol http \</span><br><span class="line">         --app-port <span class="number">9002</span> \</span><br><span class="line">         --dapr-http-port <span class="number">3500</span> \</span><br><span class="line">         --log-level debug \</span><br><span class="line">         --components-<span class="built_in">path</span> ./config \</span><br><span class="line">         go run ./<span class="built_in">cmd</span>/service/http/b/main.go</span><br></pre></td></tr></table></figure>
+<h2 id="go-client-a">go-client-a</h2>
+<p>最后创建客户端，客户端每间隔 5 秒发起一次请求到 go-service-b 。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"context"</span></span><br><span class="line">	dapr <span class="string">"github.com/dapr/go-sdk/client"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ctx := context.Background()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// create the client</span></span><br><span class="line">	client, err := dapr.NewClient()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> client.Close()</span><br><span class="line"></span><br><span class="line">	content := &amp;dapr.DataContent&#123;</span><br><span class="line">		ContentType: <span class="string">"text/plain"</span>,</span><br><span class="line">		Data:        []<span class="keyword">byte</span>(<span class="string">"This is client A."</span>),</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		resp, err := client.InvokeServiceWithContent(ctx, <span class="string">"go-service-b"</span>, <span class="string">"hello"</span>, content)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="built_in">panic</span>(err)</span><br><span class="line">		&#125;</span><br><span class="line">		log.Printf(<span class="string">"go-service-b method hello has invoked, response: %s"</span>, <span class="keyword">string</span>(resp))</span><br><span class="line"></span><br><span class="line">		time.Sleep(time.Second * <span class="number">5</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启动命令：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dapr run --app-id go-client-a \</span><br><span class="line">         --components-<span class="built_in">path</span> ./config \</span><br><span class="line">         --log-level debug \</span><br><span class="line">         go run ./<span class="built_in">cmd</span>/client/a/main.go</span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2>
+<p>client 启动后，得到返回值</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">== APP == <span class="number">2020</span>/<span class="number">11</span>/<span class="number">06</span> <span class="number">11</span>:<span class="number">26</span>:<span class="number">41</span> go-service-b method hello has invoked, response: &#123;"Message":"This message is from Service C."&#125;</span><br></pre></td></tr></table></figure>
+<p>go-service-b 打印内容为：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">== APP == <span class="number">2020</span>/<span class="number">11</span>/<span class="number">06</span> <span class="number">11</span>:<span class="number">31</span>:<span class="number">51</span> The go-service-b service has been invoked,recieve message is This is client A.</span><br></pre></td></tr></table></figure>
+<p>go-service-c 打印内容为：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">== APP == <span class="number">2020</span>/<span class="number">11</span>/<span class="number">06</span> <span class="number">11</span>:<span class="number">33</span>:<span class="number">31</span> The go-service-c service method hello has been invoked,recieve message is This is golang Service B.</span><br></pre></td></tr></table></figure>
+<p>在命令行界面中输入 <code>dapr dashboard</code> 得到输出 <code>Dapr Dashboard running on http://localhost:8080</code>，访问 <code>http://localhost:8080</code></p>
+<p><img src="/img/golang/2.png" alt="dashboard"></p>
+<p>源码地址：<a href="https://github.com/ZhangX-Byte/dapr-golang" target="_blank" rel="noopener">https://github.com/ZhangX-Byte/dapr-golang</a></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/article/java-invoke-http/" data-toggle="tooltip" data-placement="top" title="Dapr Java HTTP 调用">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#版本介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x7248;&#x672C;&#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#工程结构"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5DE5;&#x7A0B;&#x7ED3;&#x6784;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#internal"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">internal</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#go-service-c"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">go-service-c</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#go-service-b"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">go-service-b</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#go-client-a"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">go-client-a</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x603B;&#x7ED3;</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Dapr" title="Dapr">Dapr</a>
+                        
+                          <a class="tag" href="/tags/#Go" title="Go">Go</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ZhangX-Byte">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                <!--  -->
+
+                </ul>
+                <!-- <p class="copyright text-muted">
+                    Copyright &copy; ZhangX 2020 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://www.huweihuang.com">胡伟煌</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huweihuang&repo=hexo-theme-huweihuang&type=star&count=true" >
+                    </iframe>
+                </p> -->
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.huweihuang.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+    <script>
+      if (window.mermaid) {
+        mermaid.initialize({theme: 'forest'});
+      }
+    </script>
+  
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.huweihuang.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

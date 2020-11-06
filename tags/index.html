@@ -134,14 +134,14 @@
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
@@ -191,9 +191,13 @@
             <!-- 标签云 -->
             <div id='tag_cloud' class="tags">
                 
-                    <a href="#Dapr" title="Dapr" rel="8">Dapr</a>
+                    <a href="#Dapr" title="Dapr" rel="10">Dapr</a>
                 
                     <a href="#原文翻译" title="原文翻译" rel="8">原文翻译</a>
+                
+                    <a href="#Go" title="Go" rel="1">Go</a>
+                
+                    <a href="#Java" title="Java" rel="1">Java</a>
                 
             </div>
 
@@ -210,13 +214,51 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/article/dapr-readme/">
+                     <a href="/article/dapr-doc/">
                         <h2 class="post-title">
-                            简介
+                            Dapr 文档
                         </h2>
                         
                             <h3 class="post-subtitle">
-                                Dapr 源码 readme
+                                dapr/docs
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/article/go-invoke-http/">
+                        <h2 class="post-title">
+                            Dapr Golang HTTP 调用
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                go_invoke_http
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/article/java-invoke-http/">
+                        <h2 class="post-title">
+                            Dapr Java HTTP 调用
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                java_invoke_http
                             </h3>
                         
                     </a>
@@ -248,44 +290,6 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/article/dapr-doc/">
-                        <h2 class="post-title">
-                            Dapr 文档
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                dapr/docs
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/article/invoke-and-discover-services/">
-                        <h2 class="post-title">
-                            调用远程服务
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                docs/howto/invoke-and-discover-services/
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
                      <a href="/article/getting-started/">
                         <h2 class="post-title">
                             入门
@@ -293,25 +297,6 @@
                         
                             <h3 class="post-subtitle">
                                 docs/getting-started
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/article/doc-overview/">
-                        <h2 class="post-title">
-                            Dapr 概述
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                docs/overview
                             </h3>
                         
                     </a>
@@ -343,6 +328,25 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
+                     <a href="/article/invoke-and-discover-services/">
+                        <h2 class="post-title">
+                            调用远程服务
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                docs/howto/invoke-and-discover-services/
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
                      <a href="/article/service-invocation/">
                         <h2 class="post-title">
                             服务调用
@@ -350,6 +354,44 @@
                         
                             <h3 class="post-subtitle">
                                 docs/concepts/service-invocation/
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/article/doc-overview/">
+                        <h2 class="post-title">
+                            Dapr 概述
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                docs/overview
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/article/dapr-readme/">
+                        <h2 class="post-title">
+                            简介
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                Dapr 源码 readme
                             </h3>
                         
                     </a>
@@ -369,13 +411,13 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/article/dapr-readme/">
+                     <a href="/article/dapr-doc/">
                         <h2 class="post-title">
-                            简介
+                            Dapr 文档
                         </h2>
                         
                             <h3 class="post-subtitle">
-                                Dapr 源码 readme
+                                dapr/docs
                             </h3>
                         
                     </a>
@@ -407,44 +449,6 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/article/dapr-doc/">
-                        <h2 class="post-title">
-                            Dapr 文档
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                dapr/docs
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/article/invoke-and-discover-services/">
-                        <h2 class="post-title">
-                            调用远程服务
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                docs/howto/invoke-and-discover-services/
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
                      <a href="/article/getting-started/">
                         <h2 class="post-title">
                             入门
@@ -452,25 +456,6 @@
                         
                             <h3 class="post-subtitle">
                                 docs/getting-started
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/article/doc-overview/">
-                        <h2 class="post-title">
-                            Dapr 概述
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                docs/overview
                             </h3>
                         
                     </a>
@@ -502,6 +487,25 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
+                     <a href="/article/invoke-and-discover-services/">
+                        <h2 class="post-title">
+                            调用远程服务
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                docs/howto/invoke-and-discover-services/
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
                      <a href="/article/service-invocation/">
                         <h2 class="post-title">
                             服务调用
@@ -509,6 +513,96 @@
                         
                             <h3 class="post-subtitle">
                                 docs/concepts/service-invocation/
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/article/doc-overview/">
+                        <h2 class="post-title">
+                            Dapr 概述
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                docs/overview
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/article/dapr-readme/">
+                        <h2 class="post-title">
+                            简介
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                Dapr 源码 readme
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Go">
+                    <span class="tag-text">Go</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/article/go-invoke-http/">
+                        <h2 class="post-title">
+                            Dapr Golang HTTP 调用
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                go_invoke_http
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Java">
+                    <span class="tag-text">Java</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/article/java-invoke-http/">
+                        <h2 class="post-title">
+                            Dapr Java HTTP 调用
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                java_invoke_http
                             </h3>
                         
                     </a>
@@ -674,6 +768,15 @@
     })();
 </script>
 
+
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+    <script>
+      if (window.mermaid) {
+        mermaid.initialize({theme: 'forest'});
+      }
+    </script>
+  
 
 
 

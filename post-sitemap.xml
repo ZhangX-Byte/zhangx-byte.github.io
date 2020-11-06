@@ -7,6 +7,30 @@
     </url>
 
     <url>
+        <loc>http://www.huweihuang.com/article/go-invoke-http/</loc>
+        <lastmod>2020-11-06T03:50:26.862Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://www.huweihuang.com/article/service-invocation/</loc>
+        <lastmod>2020-11-05T07:47:48.864Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://www.huweihuang.com/article/java-invoke-http/</loc>
+        <lastmod>2020-11-05T01:51:44.865Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://www.huweihuang.com/article/environment-setup/</loc>
         <lastmod>2020-09-19T09:51:11.618Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -49,14 +73,6 @@
     <url>
         <loc>http://www.huweihuang.com/article/service-invocation-api/</loc>
         <lastmod>2020-09-16T02:26:43.050Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://www.huweihuang.com/article/service-invocation/</loc>
-        <lastmod>2020-09-16T00:55:52.635Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

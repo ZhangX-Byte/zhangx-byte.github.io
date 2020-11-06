@@ -134,14 +134,14 @@
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
@@ -201,51 +201,6 @@
             
                 <!-- Main Content -->
 
-
-<div class="post-preview">
-
-    <a href="/article/environment-setup/">
-        <h2 class="post-title">
-                                 
-            环境设置
-        </h2>
-        <h3 class="post-subtitle">
-            docs/getting-started/environment-setup
-        </h3>
-        <div class="post-content-preview">
-            环境设置
-
-Dapr 既可以使用自托管模式运行也可以运行在 K8S 模式下。通过自托管模式运行 Dapr 运行时使你可以在本地开发环境开发 Dapr 应用程序，然后部署到其它支持 Dapr 运行的环境。例如：你可以在自托管模式下开发 Dapr 应用程序然后把应用程序部署到任何 K8S 集群。
-内容
-
-
-环境设置
-
-内容
-先决条件
-安装 Dapr 命令行
-
-Windows
-Linux
-MacO......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by ZhangX on
-            2020-09-19
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
-            
-              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
-            
-        </div>
-    
-
-</div>
-<hr>
 
 <div class="post-preview">
 
@@ -314,6 +269,132 @@ FAQ
         <p class="post-meta" style="margin: 10px 0;">
             Posted by ZhangX on
             2020-09-17
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
+            
+              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/go-invoke-http/">
+        <h2 class="post-title">
+                                 
+            Dapr Golang HTTP 调用
+        </h2>
+        <h3 class="post-subtitle">
+            go_invoke_http
+        </h3>
+        <div class="post-content-preview">
+            版本介绍
+
+Go 版本：1.15
+Dapr Go SKD 版本：0.11.1
+
+工程结构
+
+从上图可知，新建 3 个 Go 启动项目,cmd 为启动项目目录，其中 client/a/main.go 为客户端，用于调用服务。service/http/b、service/http/c 为服务项目。调用路径如下图所示。
+graph LR;
+    go-client-a--1-->go-servi......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by ZhangX on
+            2020-11-04
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
+            
+              <a href="/tags/#Go" title="Go">Go</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/java-invoke-http/">
+        <h2 class="post-title">
+                                 
+            Dapr Java HTTP 调用
+        </h2>
+        <h3 class="post-subtitle">
+            java_invoke_http
+        </h3>
+        <div class="post-content-preview">
+            版本介绍
+
+Java 版本：1.8
+Dapr Java SKD 版本：0.9.2
+
+服务介绍
+新建 3 个 Java 服务，分别为 ServiceA 作为 client 调用 ServiceB, ServiceB 调用 ServiceC。
+graph LR;
+    ServiceA-->ServiceB;
+    ServiceB-->ServiceC;
+    ServiceC-->Se......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by ZhangX on
+            2020-11-04
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/environment-setup/">
+        <h2 class="post-title">
+                                 
+            环境设置
+        </h2>
+        <h3 class="post-subtitle">
+            docs/getting-started/environment-setup
+        </h3>
+        <div class="post-content-preview">
+            环境设置
+
+Dapr 既可以使用自托管模式运行也可以运行在 K8S 模式下。通过自托管模式运行 Dapr 运行时使你可以在本地开发环境开发 Dapr 应用程序，然后部署到其它支持 Dapr 运行的环境。例如：你可以在自托管模式下开发 Dapr 应用程序然后把应用程序部署到任何 K8S 集群。
+内容
+
+
+环境设置
+
+内容
+先决条件
+安装 Dapr 命令行
+
+Windows
+Linux
+MacO......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by ZhangX on
+            2020-09-19
         </p>
         <div class="tags">
             
@@ -464,11 +545,11 @@ Dapr 允许你为应用程序分配......
 Service Invocation
 
 使用服务调用 API,你的微服务可以找到其它微服务，并且在你的系统中使用标准协议（当前支持 gRPC 或者 HTTP）进行可靠通讯。
-以下是一个 Dapr 服务调用如何工作的高度概述。
+以下是一个 Dapr 服务调用如何工作的高度概括。
 
 
 服务 A 对服务 B 发起一个 http/gRPC 请求。请求进入到本地 Dapr 边车。
-Dapr 发现服务 B 的尾制并且转发消息到服务 B 的 Da......
+Dapr 发现服务 B 的位置并且转发消息到服务 B 的 Da......
         </div>
     </a>
     
@@ -597,11 +678,19 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
     <div class="tags">
         
             
-            <a href="/tags/#Dapr" title="Dapr" rel="8">Dapr</a>
+            <a href="/tags/#Dapr" title="Dapr" rel="10">Dapr</a>
             
         
             
             <a href="/tags/#原文翻译" title="原文翻译" rel="8">原文翻译</a>
+            
+        
+            
+            <a href="/tags/#Go" title="Go" rel="1">Go</a>
+            
+        
+            
+            <a href="/tags/#Java" title="Java" rel="1">Java</a>
             
         
     </div>
@@ -657,6 +746,14 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
     <ul>
       
         <li>
+          <a href="/article/go-invoke-http/">Dapr Golang HTTP 调用</a>
+        </li>
+      
+        <li>
+          <a href="/article/java-invoke-http/">Dapr Java HTTP 调用</a>
+        </li>
+      
+        <li>
           <a href="/article/environment-setup/">环境设置</a>
         </li>
       
@@ -666,14 +763,6 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
       
         <li>
           <a href="/article/getting-started/">入门</a>
-        </li>
-      
-        <li>
-          <a href="/article/service-invocation-api/">服务调用 API 规范</a>
-        </li>
-      
-        <li>
-          <a href="/article/invoke-and-discover-services/">调用远程服务</a>
         </li>
       
     </ul>
@@ -688,7 +777,7 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">8</span></li></ul>
     </div>
 
         <hr>
@@ -849,6 +938,15 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
     })();
 </script>
 
+
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+    <script>
+      if (window.mermaid) {
+        mermaid.initialize({theme: 'forest'});
+      }
+    </script>
+  
 
 
 
