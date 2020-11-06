@@ -31,12 +31,12 @@ apr（Distributed Application Runtime） 是一个可移植的（portable）、�
 
 ---
 
-Dapr 可以在本地或者 K8S 上运行。我们推荐从本地设置开始探索 Dapr 核心概念并且熟悉 Dapr CLI。跟随这些指令配置本地和 K8S Dapr。
+Dapr 可以在本地或者 K8S 上运行。我们推荐从本地设置开始探索 Dapr 核心概念并且熟悉 Dapr CLI。跟随这些指令{% post_link environment-setup 配置本地和 K8S Dapr %}。
 
 ## 下一步
 
 ---
 
-1. 安装完 Dapr 后，查看[Hello World 开素开始]以继续。
+1. 安装完 Dapr 后，查看[Hello World 快速开始]以继续。
 2. 探索其它[快速开始]了解更多高级概念，比如：服务调用、发布/订阅、状态管理。
 3. 跟随[如何引导]了解 Dapr 如何解决指定问题，比如创建一个[限速应用]。
