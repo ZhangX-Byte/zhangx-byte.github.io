@@ -21,7 +21,7 @@ catagories:
 
 ![工程结构](/img/golang/1.png)
 
-从上图可知，新建 3 个 Go 启动项目,cmd 为启动项目目录，其中 client/a/main.go 为客户端，用于调用服务。service/http/b、service/http/c 为服务项目。调用路径如下图所示。
+从上图可知，新建 3 个 Go 启动项目,cmd 为启动项目目录，其中 client/a/main.go 为客户端，用于调用服务。service/http/b、service/http/c 为服务项目。调用路径如下图所示。新建两个 service 的意义在于展示 http 链路调用通过 dapr 如何实现。
 
 ```mermaid
 graph LR;
@@ -31,8 +31,8 @@ graph LR;
     go-service-b--4-->go-client-a;
 ```
 
-1. go-client-a 作为客户端调用服务 go-service-b;
-2. go-service-b 作为服务中转，既收来自 go-client-a 客户端的请求，又发起对 go-service-c 的调用;
+1. go-client-a 做为客户端调用服务 go-service-b;
+2. go-service-b 做为服务中转，既收来自 go-client-a 客户端的请求，又发起对 go-service-c 的调用;
 3. go-service-c 响应 go-service-b 的请求；
 4. go-service-b 响应 go-client-a 的请求。
 
