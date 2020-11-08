@@ -144,14 +144,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -232,6 +232,24 @@
 <li><a href="#%E8%87%AA%E6%89%98%E7%AE%A1%E6%A8%A1%E5%BC%8F%E5%8D%B8%E8%BD%BD-dapr">自托管模式卸载 Dapr</a></li>
 </ul>
 </li>
+<li><a href="#%E5%9C%A8-k8s-%E9%9B%86%E7%BE%A4%E4%B8%8B%E5%AE%89%E8%A3%85-dapr">在 K8S 集群下安装 Dapr</a>
+<ul>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%9B%86%E7%BE%A4">设置集群</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-dapr-%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2">使用 Dapr 命令行界面</a>
+<ul>
+<li><a href="#%E5%AE%89%E8%A3%85-dapr-%E5%88%B0-k8s">安装 Dapr 到 K8S</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BD%BF%E7%94%A8-helm-%E9%AB%98%E7%BA%A7">使用 Helm （高级）</a>
+<ul>
+<li><a href="#%E5%9C%A8-k8s-%E4%B8%AD%E5%AE%89%E8%A3%85-dapr">在 K8S 中安装 Dapr</a></li>
+<li><a href="#%E9%AA%8C%E8%AF%81%E5%AE%89%E8%A3%85">验证安装</a></li>
+<li><a href="#%E8%BE%B9%E8%BD%A6%E6%B3%A8%E9%87%8A">边车注释</a></li>
+<li><a href="#%E4%BB%8E-k8s-%E4%B8%AD%E5%8D%B8%E8%BD%BD-dapr">从 K8S 中卸载 Dapr</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -289,6 +307,79 @@
 <blockquote>
 <p>对于 Linux 用户，如果你运行你的 docker 命令通过 sudo 或者安装路径为 <code>/usr/local/bin</code>（默认路径），你需要使用 <code>sudo dapr uninstall</code> 移除 dapr 二进制文件或者容器。</p>
 </blockquote>
+<p>默认它不会移除 Redis 或者 Zipkin 容器以防你对它们有其它用途。要移除 Redis、Zipkin 和 actor 部署容器和移除位于 <code>$HOME/.dapr</code> 或者 <code>%USERPROFILE%\.dapr\</code> 的默认 Dapr 目录， ，运行：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$dapr uninstall --all</span><br></pre></td></tr></table></figure>
+<p>你应该总在运行 <code>dapr init</code> 之前运行 <code>dapr uninstall</code> 。</p>
+<h3 id="在-k8s-集群下安装-dapr">在 K8S 集群下安装 Dapr</h3>
+<hr>
+<p>当设置 K8S 时，你可以通过 Dapr 命令行界面或者 Helm 。</p>
+<p>Dapr 安装以下 pods：</p>
+<ul>
+<li>dapr-operator：管理组件更新和 Dapr K8S 服务终端（状态存储、发布-订阅、等等）</li>
+<li>dapr-sidecar-injector：注入 Dapr 到已注释的部署 pods 中</li>
+<li>dapr-placement：仅用于 actors ，创建映射表以映射 actor 实例到 pods 中</li>
+<li>dapr-sentry：管理服务之间的 mTLS 并充当证书颁发机构</li>
+</ul>
+<h4 id="设置集群">设置集群</h4>
+<p>你可以在任何 K8S 集群安装 Dapr 。以下是一些有用的链接：</p>
+<ul>
+<li>
+<a href="/article/setup-minikube/" title="Setup Minikube Cluster">Setup Minikube Cluster</a>
+</li>
+<li>
+<a href="/article/setup-aks/" title="Setup Azure Kubernetes Service Cluster">Setup Azure Kubernetes Service Cluster</a>
+</li>
+<li><a href="https://cloud.google.com/kubernetes-engine/docs/quickstart" target="_blank" rel="noopener">Setup Google Cloud Kubernetes Engine</a></li>
+<li><a href="https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html" target="_blank" rel="noopener">Setup Amazon Elastic Kubernetes Service</a></li>
+</ul>
+<blockquote>
+<p>注意：Dapr 命令行界面和 Dapr Helm 图表都会自动部署具有 <code>kubernetes.io/os=linux</code> 标签关联的节点。你可以部署 Dapr 到 Windows 节点，但大多数用户应该不需要。更多信息查看 <a href="https://github.com/dapr/docs/tree/master/howto/windows-k8s" target="_blank" rel="noopener">Deploying to a Hybrid Linux/Windows K8s Cluster</a></p>
+</blockquote>
+<h4 id="使用-dapr-命令行界面">使用 Dapr 命令行界面</h4>
+<p>你可以使用命令行界面安装 Dapr 到 K8S 集群。</p>
+<h5 id="安装-dapr-到-k8s">安装 Dapr 到 K8S</h5>
+<blockquote>
+<p>注意：默认命名空间是 dapr-system</p>
+</blockquote>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ dapr init -k</span><br><span class="line"></span><br><span class="line">⌛  Making the jump to hyperspace...</span><br><span class="line">ℹ️  Note: To install Dapr using Helm, see here:  https://github.com/dapr/docs/blob/master/getting-started/environment-setup.<span class="built_in">md</span>#using-helm-advanced</span><br><span class="line"></span><br><span class="line">✅  Deploying the Dapr control plane to your cluster...</span><br><span class="line">✅  Success! Dapr has been installed to namespace dapr-system. To <span class="built_in">verify</span>, run "dapr status -k" <span class="keyword">in</span> your terminal. To get started, go here: https://aka.ms/dapr-getting-started</span><br></pre></td></tr></table></figure>
+<p>安装到自定义命名空间：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dapr init -k -n mynamespace</span><br></pre></td></tr></table></figure>
+<p>高可用模式安装：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dapr init -k --enable-ha=true</span><br></pre></td></tr></table></figure>
+<p>禁用 mTLS：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dapr init -k --enable-mtls=false</span><br></pre></td></tr></table></figure>
+<p>从 K8S 中卸载 Dapr</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$dapr uninstall --kubernetes</span><br></pre></td></tr></table></figure>
+<h4 id="使用-helm-高级">使用 Helm （高级）</h4>
+<p>你可以使用 Helm 3 图表安装 K8S 集群。</p>
+<blockquote>
+<p>注意：最新的 Darp helm 图表不在支持 Helm v2。请跟随<a href="https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/" target="_blank" rel="noopener">指南</a>迁移 helm v2 到 helm v3。</p>
+</blockquote>
+<h5 id="在-k8s-中安装-dapr">在 K8S 中安装 Dapr</h5>
+<ol>
+<li>确认 Helm 3 已经安装到你的机器上</li>
+<li>添加 Azure 容器注册表做为 Helm 仓库</li>
+</ol>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add dapr https://dapr.github.io/helm-charts/</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>在你的 K8S 集群中创建 <code>dapr-system</code> 命名空间</li>
+</ol>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create namespace dapr-system</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>在你的集群 <code>dapr-system</code> 命名空间中安装 Dapr 图表。</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm install dapr dapr/dapr --namespace dapr-system</span><br></pre></td></tr></table></figure>
+<h5 id="验证安装">验证安装</h5>
+<p>一旦图表完成安装，验证 dapr-operator, dapr-placement, dapr-sidecar-injector 和 dapr-sentry pods 在 <code>dapr-system</code> 命名空间中运行。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -n dapr-system -w</span><br><span class="line"></span><br><span class="line">NAME                                     READY     STATUS    RESTARTS   AGE</span><br><span class="line">dapr-operator-<span class="number">7</span>bd6cbf5bf-xglsr           <span class="number">1</span>/<span class="number">1</span>       Running   <span class="number">0</span>          <span class="number">40</span>s</span><br><span class="line">dapr-placement-<span class="number">7</span>f8f76778f-<span class="number">6</span>vhl2          <span class="number">1</span>/<span class="number">1</span>       Running   <span class="number">0</span>          <span class="number">40</span>s</span><br><span class="line">dapr-sidecar-injector-<span class="number">8555576</span>b6f-<span class="number">29</span>cqm   <span class="number">1</span>/<span class="number">1</span>       Running   <span class="number">0</span>          <span class="number">40</span>s</span><br><span class="line">dapr-sentry-<span class="number">9435776</span>c7f-<span class="number">8</span>f7yd             <span class="number">1</span>/<span class="number">1</span>       Running   <span class="number">0</span>          <span class="number">40</span>s</span><br></pre></td></tr></table></figure>
+<h5 id="边车注释">边车注释</h5>
+<p>要查看在 K8S 中所有 Dapr 边车支持的注释，访问<a href="https://github.com/dapr/docs/blob/master/howto/configure-k8s/README.md" target="_blank" rel="noopener">这里</a>查看。</p>
+<h5 id="从-k8s-中卸载-dapr">从 K8S 中卸载 Dapr</h5>
+<p>Helm3</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm uninstall dapr -n dapr-system</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：点击<a href="https://github.com/dapr/dapr/blob/master/charts/dapr/README.md" target="_blank" rel="noopener">这里</a>查看 Dapr helm 图表细节。</p>
+</blockquote>
 
                 
 
@@ -297,7 +388,7 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/java-invoke-http/" data-toggle="tooltip" data-placement="top" title="Dapr Java HTTP 调用">&larr; Previous Post</a>
+                            <a href="/article/setup-minikube/" data-toggle="tooltip" data-placement="top" title="设置 Minikube 集群">&larr; Previous Post</a>
                         </li>
                     
                     
@@ -342,18 +433,12 @@
             <!-- Table of Contents -->
 
   
-    <style>
-      span.toc-nav-number{
-        display: none
-      }
-    </style>
-  
     
       <aside id="sidebar">
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#环境设置"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x73AF;&#x5883;&#x8BBE;&#x7F6E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内容"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5185;&#x5BB9;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#先决条件"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5148;&#x51B3;&#x6761;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#安装-dapr-命令行"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x5B89;&#x88C5; Dapr &#x547D;&#x4EE4;&#x884C;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#windows"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">Windows</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#linux"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">Linux</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#macos"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">MacOS</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#通过二进制版本"><span class="toc-nav-number">1.3.4.</span> <span class="toc-nav-text">&#x901A;&#x8FC7;&#x4E8C;&#x8FDB;&#x5236;&#x7248;&#x672C;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#自托管模式安装-dapr"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x81EA;&#x6258;&#x7BA1;&#x6A21;&#x5F0F;&#x5B89;&#x88C5; Dapr</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#使用命令行界面初始化-dapr"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x754C;&#x9762;&#x521D;&#x59CB;&#x5316; Dapr</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#安装指定运行时版本"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">&#x5B89;&#x88C5;&#x6307;&#x5B9A;&#x8FD0;&#x884C;&#x65F6;&#x7248;&#x672C;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#自托管模式卸载-dapr"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">&#x81EA;&#x6258;&#x7BA1;&#x6A21;&#x5F0F;&#x5378;&#x8F7D; Dapr</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#环境设置"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x73AF;&#x5883;&#x8BBE;&#x7F6E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内容"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5185;&#x5BB9;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#先决条件"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5148;&#x51B3;&#x6761;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#安装-dapr-命令行"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x5B89;&#x88C5; Dapr &#x547D;&#x4EE4;&#x884C;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#windows"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">Windows</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#linux"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">Linux</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#macos"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">MacOS</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#通过二进制版本"><span class="toc-nav-number">1.3.4.</span> <span class="toc-nav-text">&#x901A;&#x8FC7;&#x4E8C;&#x8FDB;&#x5236;&#x7248;&#x672C;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#自托管模式安装-dapr"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x81EA;&#x6258;&#x7BA1;&#x6A21;&#x5F0F;&#x5B89;&#x88C5; Dapr</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#使用命令行界面初始化-dapr"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x754C;&#x9762;&#x521D;&#x59CB;&#x5316; Dapr</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#安装指定运行时版本"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">&#x5B89;&#x88C5;&#x6307;&#x5B9A;&#x8FD0;&#x884C;&#x65F6;&#x7248;&#x672C;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#自托管模式卸载-dapr"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">&#x81EA;&#x6258;&#x7BA1;&#x6A21;&#x5F0F;&#x5378;&#x8F7D; Dapr</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#在-k8s-集群下安装-dapr"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">&#x5728; K8S &#x96C6;&#x7FA4;&#x4E0B;&#x5B89;&#x88C5; Dapr</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#设置集群"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">&#x8BBE;&#x7F6E;&#x96C6;&#x7FA4;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#使用-dapr-命令行界面"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">&#x4F7F;&#x7528; Dapr &#x547D;&#x4EE4;&#x884C;&#x754C;&#x9762;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#安装-dapr-到-k8s"><span class="toc-nav-number">1.5.2.1.</span> <span class="toc-nav-text">&#x5B89;&#x88C5; Dapr &#x5230; K8S</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#使用-helm-高级"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">&#x4F7F;&#x7528; Helm &#xFF08;&#x9AD8;&#x7EA7;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#在-k8s-中安装-dapr"><span class="toc-nav-number">1.5.3.1.</span> <span class="toc-nav-text">&#x5728; K8S &#x4E2D;&#x5B89;&#x88C5; Dapr</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#验证安装"><span class="toc-nav-number">1.5.3.2.</span> <span class="toc-nav-text">&#x9A8C;&#x8BC1;&#x5B89;&#x88C5;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#边车注释"><span class="toc-nav-number">1.5.3.3.</span> <span class="toc-nav-text">&#x8FB9;&#x8F66;&#x6CE8;&#x91CA;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#从-k8s-中卸载-dapr"><span class="toc-nav-number">1.5.3.4.</span> <span class="toc-nav-text">&#x4ECE; K8S &#x4E2D;&#x5378;&#x8F7D; Dapr</span></a></li></ol></li></ol></li></ol></li></ol>
         
         </div>
       </aside>

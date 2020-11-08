@@ -134,14 +134,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -300,9 +300,7 @@ Dapr Go SKD 版本：0.11.1
 
 工程结构
 
-从上图可知，新建 3 个 Go 启动项目,cmd 为启动项目目录，其中 client/a/main.go 为客户端，用于调用服务。service/http/b、service/http/c 为服务项目。调用路径如下图所示。
-graph LR;
-    go-client-a--1-->go-servi......
+从上图可知，新建 3 个 Go 启动项目,cmd 为启动项目目录，其中 client/a/main.go 为客户端，用于调用服务。service/http/b、service/http/c 为服务项目。调用路径如下图所示。新建两个 service 的意义在于展示 http 链路调用通过 dapr 如何......
         </div>
     </a>
     
@@ -335,15 +333,16 @@ graph LR;
         <div class="post-content-preview">
             版本介绍
 
-Java 版本：1.8
+Java 版本：8
 Dapr Java SKD 版本：0.9.2
 
-服务介绍
-新建 3 个 Java 服务，分别为 ServiceA 作为 client 调用 ServiceB, ServiceB 调用 ServiceC。
-graph LR;
-    ServiceA-->ServiceB;
-    ServiceB-->ServiceC;
-    ServiceC-->Se......
+Dapr Java-SDK HTTP 调用文档 有个先决条件，内容如下：
+
+Dapr and Dapr CLI.
+Java JDK 11 (or greater): Oracle JDK or OpenJDK.
+Apache Maven version 3.x.
+
+大家看到 Java JDK 版本最低要求是 11......
         </div>
     </a>
     
@@ -356,6 +355,105 @@ graph LR;
               <a href="/tags/#Dapr" title="Dapr">Dapr</a>
             
               <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/setup-aks/">
+        <h2 class="post-title">
+                                 
+            设置 Azure K8S 服务集群
+        </h2>
+        <h3 class="post-subtitle">
+            docs/getting-started/cluster/setup-aks.md
+        </h3>
+        <div class="post-content-preview">
+            设置 Azure K8S 服务集群
+
+前置条件
+
+
+Docker
+kubectl
+Azure CLI
+
+部署 Azure K8S 服务集群
+
+这个指南向你介绍安装 Azure K8S 服务集群。如果你需要了解更多信息，参考快速开始：使用 Azure CLI 部署 Azure K8S 服务（AKS）集群
+
+登录 Azure
+
+1az login
+
+设置默认订阅
+
+1az account set......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by ZhangX on
+            2020-09-29
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
+            
+              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/setup-minikube/">
+        <h2 class="post-title">
+                                 
+            设置 Minikube 集群
+        </h2>
+        <h3 class="post-subtitle">
+            docs/getting-started/cluster/setup-minikube.md
+        </h3>
+        <div class="post-content-preview">
+            设置 Minikube 集群
+
+前置条件
+
+
+Docker
+kubectl
+Minikube
+
+
+注意：对于 Windows ，在 BIOS 中启用 Virtualization 并且安装 Hyper-V
+
+开始 Minikube 集群
+
+（可选）设置默认 VM 驱动
+
+1minikube config set vm-driver [driver_name]
+
+通过 --kubernetes......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by ZhangX on
+            2020-09-27
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
+            
+              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
             
         </div>
     
@@ -569,84 +667,16 @@ Dapr 发现服务 B 的位置并且转发消息到服务 B 的 Da......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/doc-overview/">
-        <h2 class="post-title">
-                                 
-            Dapr 概述
-        </h2>
-        <h3 class="post-subtitle">
-            docs/overview
-        </h3>
-        <div class="post-content-preview">
-            Dapr 概述
-
-Dapr overview
-Dapr 是一个可移植的（portable）、事件驱动（event-driven）的运行时框架。企业开发者使用 Dapr 可以轻松构建弹性、无状态和有状态运行在云上和边缘的微服务。并且拥抱开发语言和开发框架的多样性。
-任何开发语言、任何开发框架、运行在任何地方
-
-
-我们正处于云应用浪潮中。开发者使用 Web + Database 架构（例如经典3......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by ZhangX on
-            2020-09-11
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
-            
-              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/dapr-readme/">
-        <h2 class="post-title">
-                                 
-            简介
-        </h2>
-        <h3 class="post-subtitle">
-            Dapr 源码 readme
-        </h3>
-        <div class="post-content-preview">
-            介绍
-官方文档地址
-Dapr（Distributed Application Runtime） 是一个可移植的（portable）、事件驱动（event-driven）的运行时框架。开发者通过 Dapr 可以构建弹性、无状态、有状态的运行在云上和边缘的微服务。并且拥抱开发语言和开发框架的多样性。
-Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因此，你可以选择开发语言和框架构建可移......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by ZhangX on
-            2020-09-11
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
-            
-              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
 
 <ul class="pager">
     
+    
+        <li class="next">
+            <a href="/page/2/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
@@ -678,11 +708,11 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
     <div class="tags">
         
             
-            <a href="/tags/#Dapr" title="Dapr" rel="10">Dapr</a>
+            <a href="/tags/#Dapr" title="Dapr" rel="12">Dapr</a>
             
         
             
-            <a href="/tags/#原文翻译" title="原文翻译" rel="8">原文翻译</a>
+            <a href="/tags/#原文翻译" title="原文翻译" rel="10">原文翻译</a>
             
         
             
@@ -754,15 +784,15 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
         </li>
       
         <li>
+          <a href="/article/setup-aks/">设置 Azure K8S 服务集群</a>
+        </li>
+      
+        <li>
+          <a href="/article/setup-minikube/">设置 Minikube 集群</a>
+        </li>
+      
+        <li>
           <a href="/article/environment-setup/">环境设置</a>
-        </li>
-      
-        <li>
-          <a href="/article/dapr-doc/">Dapr 文档</a>
-        </li>
-      
-        <li>
-          <a href="/article/getting-started/">入门</a>
         </li>
       
     </ul>
@@ -777,7 +807,7 @@ Dapr 将构建微服务的最佳实践整理为开放、独立的构建块。因
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">10</span></li></ul>
     </div>
 
         <hr>

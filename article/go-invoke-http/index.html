@@ -144,14 +144,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -214,15 +214,15 @@
 </ul>
 <h2 id="工程结构">工程结构</h2>
 <p><img src="/img/golang/1.png" alt="工程结构"></p>
-<p>从上图可知，新建 3 个 Go 启动项目,cmd 为启动项目目录，其中 client/a/main.go 为客户端，用于调用服务。service/http/b、service/http/c 为服务项目。调用路径如下图所示。</p>
+<p>从上图可知，新建 3 个 Go 启动项目,cmd 为启动项目目录，其中 client/a/main.go 为客户端，用于调用服务。service/http/b、service/http/c 为服务项目。调用路径如下图所示。新建两个 service 的意义在于展示 http 链路调用通过 dapr 如何实现。</p>
 <pre class="mermaid">graph LR;
     go-client-a--1-->go-service-b;
     go-service-b--2-->go-service-c;
     go-service-c--3-->go-service-b;
     go-service-b--4-->go-client-a;</pre>
 <ol>
-<li>go-client-a 作为客户端调用服务 go-service-b;</li>
-<li>go-service-b 作为服务中转，既收来自 go-client-a 客户端的请求，又发起对 go-service-c 的调用;</li>
+<li>go-client-a 做为客户端调用服务 go-service-b;</li>
+<li>go-service-b 做为服务中转，既收来自 go-client-a 客户端的请求，又发起对 go-service-c 的调用;</li>
 <li>go-service-c 响应 go-service-b 的请求；</li>
 <li>go-service-b 响应 go-client-a 的请求。</li>
 </ol>

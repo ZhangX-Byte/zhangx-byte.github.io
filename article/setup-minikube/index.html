@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Dapr 文档 - ZhangX | Dapr
+          设置 Minikube 集群 - ZhangX | Dapr
         
     </title>
 
-    <link rel="canonical" href="http://www.huweihuang.com/article/dapr-doc/">
+    <link rel="canonical" href="http://www.huweihuang.com/article/setup-minikube/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
                             
                         </div>
-                        <h1>Dapr 文档</h1>
-                        <h2 class="subheading">dapr/docs</h2>
+                        <h1>设置 Minikube 集群</h1>
+                        <h2 class="subheading">docs/getting-started/cluster/setup-minikube.md</h2>
                         <span class="meta">
                             Posted by ZhangX on
-                            2020-09-17
+                            2020-09-27
                         </span>
                     </div>
                 
@@ -207,48 +207,45 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="dapr-文档">Dapr 文档</h2>
+                <h2 id="设置-minikube-集群">设置 Minikube 集群</h2>
 <hr>
-<h3 id="内容">内容</h3>
-<table>
-<thead>
-<tr>
-<th>主题</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="/article/doc-overview/" title="概述">概述</a></td>
-<td>Dapr 概述以及你如何使用它构建事件驱动、分部署应用程序</td>
-</tr>
-<tr>
-<td><a href="/article/getting-started/" title="快速开始">快速开始</a></td>
-<td>设置你的开发环境</td>
-</tr>
-<tr>
-<td>概念</td>
-<td>Dapr 概念解释</td>
-</tr>
-<tr>
-<td>如何做</td>
-<td>指导解释如何完成指定的任务</td>
-</tr>
-<tr>
-<td>最佳实践</td>
-<td>指导解释使用 Dapr 最佳实践</td>
-</tr>
-<tr>
-<td>引用</td>
-<td>API 和绑定引用文档</td>
-</tr>
-<tr>
-<td>FAQ</td>
-<td>常见问答</td>
-</tr>
-</tbody>
-</table>
-<h3 id="更多文档">更多文档</h3>
+<h3 id="前置条件">前置条件</h3>
+<hr>
+<ul>
+<li>Docker</li>
+<li>kubectl</li>
+<li>Minikube</li>
+</ul>
+<blockquote>
+<p>注意：对于 Windows ，在 BIOS 中启用 Virtualization 并且安装 <a href="https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v" target="_blank" rel="noopener">Hyper-V</a></p>
+</blockquote>
+<h3 id="开始-minikube-集群">开始 Minikube 集群</h3>
+<ol>
+<li>（可选）设置默认 VM 驱动</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube config <span class="built_in">set</span> vm-driver [driver_name]</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>通过 <code>--kubernetes-version</code> 指定 K8S 版本（使用 1.13.x 或者更新的版本）开始集群。</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube <span class="built_in">start</span> --cpus=<span class="number">4</span> --memory=<span class="number">4096</span> --kubernetes-version=<span class="number">1</span>.<span class="number">16</span>.<span class="number">2</span> --extra-config=apiserver.authorization-<span class="built_in">mode</span>=RBAC</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>启用仪表盘和入口插件</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Enable dashboard</span><br><span class="line">minikube addons enable dashboard</span><br><span class="line"></span><br><span class="line"># Enable ingress</span><br><span class="line">minikube addons enable ingress</span><br></pre></td></tr></table></figure>
+<h3 id="可选安装-helm-v3">(可选)安装 Helm v3</h3>
+<hr>
+<ol>
+<li><a href="https://helm.sh/docs/intro/install/" target="_blank" rel="noopener">安装 Helm v3 客户端</a></li>
+</ol>
+<blockquote>
+<p>注意： 最新的 Dapr helm 图表不在支持 Helm v2。请从 heml v2 迁移至 heml v3，<a href="https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/" target="_blank" rel="noopener">迁移指南</a></p>
+</blockquote>
+<h4 id="疑难解答">疑难解答</h4>
+<ol>
+<li>负载均衡器的外部 IP 地址不从 <code>kubectl get svc</code> 中显示</li>
+</ol>
+<p>在 Minikube 中，你的服务 EXTERNAL-IP 在 <code>kubectl get svc</code> 中显示 <code>&lt;pending&gt;</code> 状态。在这种情况下，你可以运行 <code>minikube service [service_name]</code> 以打开你的服务并且不显示外部 IP 地址。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get svc</span><br><span class="line">NAME                        <span class="built_in">TYPE</span>           CLUSTER-IP       EXTERNAL-IP   PORT(S)            AGE</span><br><span class="line">...</span><br><span class="line">calculator-front-end        LoadBalancer   <span class="number">10</span>.<span class="number">103</span>.<span class="number">98</span>.<span class="number">37</span>     &lt;pending&gt;     <span class="number">80</span>:<span class="number">30534</span>/TCP       <span class="number">25</span>h</span><br><span class="line">calculator-front-end-dapr   ClusterIP      <span class="number">10</span>.<span class="number">107</span>.<span class="number">128</span>.<span class="number">226</span>   &lt;none&gt;        <span class="number">80</span>/TCP,<span class="number">50001</span>/TCP   <span class="number">25</span>h</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">$ minikube service calculator-front-end</span><br><span class="line">|-----------|----------------------|-------------|---------------------------|</span><br><span class="line">| NAMESPACE |         NAME         | TARGET PORT |            URL            |</span><br><span class="line">|-----------|----------------------|-------------|---------------------------|</span><br><span class="line">| default   | calculator-front-end |             | http://<span class="number">192</span>.<span class="number">168</span>.<span class="number">64</span>.<span class="number">7</span>:<span class="number">30534</span> |</span><br><span class="line">|-----------|----------------------|-------------|---------------------------|</span><br><span class="line">🎉  Opening kubernetes service  default/calculator-front-end <span class="keyword">in</span> default browser...</span><br></pre></td></tr></table></figure>
 
                 
 
@@ -257,12 +254,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/environment-setup/" data-toggle="tooltip" data-placement="top" title="环境设置">&larr; Previous Post</a>
+                            <a href="/article/setup-aks/" data-toggle="tooltip" data-placement="top" title="设置 Azure K8S 服务集群">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/getting-started/" data-toggle="tooltip" data-placement="top" title="入门">Next Post &rarr;</a>
+                            <a href="/article/environment-setup/" data-toggle="tooltip" data-placement="top" title="环境设置">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -307,7 +304,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#dapr-文档"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Dapr &#x6587;&#x6863;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内容"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5185;&#x5BB9;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#更多文档"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x66F4;&#x591A;&#x6587;&#x6863;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#设置-minikube-集群"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x8BBE;&#x7F6E; Minikube &#x96C6;&#x7FA4;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#前置条件"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x524D;&#x7F6E;&#x6761;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#开始-minikube-集群"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5F00;&#x59CB; Minikube &#x96C6;&#x7FA4;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#可选安装-helm-v3"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">(&#x53EF;&#x9009;)&#x5B89;&#x88C5; Helm v3</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#疑难解答"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x7591;&#x96BE;&#x89E3;&#x7B54;</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>

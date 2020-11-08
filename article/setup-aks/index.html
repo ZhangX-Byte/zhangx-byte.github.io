@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Dapr 文档 - ZhangX | Dapr
+          设置 Azure K8S 服务集群 - ZhangX | Dapr
         
     </title>
 
-    <link rel="canonical" href="http://www.huweihuang.com/article/dapr-doc/">
+    <link rel="canonical" href="http://www.huweihuang.com/article/setup-aks/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
                             
                         </div>
-                        <h1>Dapr 文档</h1>
-                        <h2 class="subheading">dapr/docs</h2>
+                        <h1>设置 Azure K8S 服务集群</h1>
+                        <h2 class="subheading">docs/getting-started/cluster/setup-aks.md</h2>
                         <span class="meta">
                             Posted by ZhangX on
-                            2020-09-17
+                            2020-09-29
                         </span>
                     </div>
                 
@@ -207,49 +207,51 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="dapr-文档">Dapr 文档</h2>
+                <h2 id="设置-azure-k8s-服务集群">设置 Azure K8S 服务集群</h2>
 <hr>
-<h3 id="内容">内容</h3>
-<table>
-<thead>
-<tr>
-<th>主题</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="/article/doc-overview/" title="概述">概述</a></td>
-<td>Dapr 概述以及你如何使用它构建事件驱动、分部署应用程序</td>
-</tr>
-<tr>
-<td><a href="/article/getting-started/" title="快速开始">快速开始</a></td>
-<td>设置你的开发环境</td>
-</tr>
-<tr>
-<td>概念</td>
-<td>Dapr 概念解释</td>
-</tr>
-<tr>
-<td>如何做</td>
-<td>指导解释如何完成指定的任务</td>
-</tr>
-<tr>
-<td>最佳实践</td>
-<td>指导解释使用 Dapr 最佳实践</td>
-</tr>
-<tr>
-<td>引用</td>
-<td>API 和绑定引用文档</td>
-</tr>
-<tr>
-<td>FAQ</td>
-<td>常见问答</td>
-</tr>
-</tbody>
-</table>
-<h3 id="更多文档">更多文档</h3>
-
+<h3 id="前置条件">前置条件</h3>
+<hr>
+<ul>
+<li><a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/" target="_blank" rel="noopener">kubectl</a></li>
+<li><a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest" target="_blank" rel="noopener">Azure CLI</a></li>
+</ul>
+<h3 id="部署-azure-k8s-服务集群">部署 Azure K8S 服务集群</h3>
+<hr>
+<p>这个指南向你介绍安装 Azure K8S 服务集群。如果你需要了解更多信息，参考<a href="https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough" target="_blank" rel="noopener">快速开始：使用 Azure CLI 部署 Azure K8S 服务（AKS）集群</a></p>
+<ol>
+<li>登录 Azure</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az login</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>设置默认订阅</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az account <span class="built_in">set</span> -s [your_subscription_id]</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>创建资源组</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az group create --name [your_resource_group] --location [region]</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>创建一个 Azure K8S 服务集群</li>
+</ol>
+<p>K8S 通过 <code>--kubernetes-version</code> 使用 1.13.x 或者更新的版本</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az aks create --resource-group [your_resource_group] --name [your_aks_cluster_name] --node-count <span class="number">2</span> --kubernetes-version <span class="number">1</span>.<span class="number">14</span>.<span class="number">7</span> --enable-addons http_application_routing --enable-rbac --generate-ssh-keys</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>从 Azure K8S 集群中获取访问凭证</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az aks get-credentials -n [your_aks_cluster_name] -g [your_resource_group]</span><br></pre></td></tr></table></figure>
+<h3 id="可选安装-helm-v3">（可选）安装 Helm v3</h3>
+<hr>
+<ol>
+<li><a href="https://helm.sh/docs/intro/install/" target="_blank" rel="noopener">安装 Helm v3 客户端</a></li>
+</ol>
+<blockquote>
+<p>注意： 最新的 Dapr helm 图表不在支持 Helm v2。请从 heml v2 迁移至 heml v3，<a href="https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/" target="_blank" rel="noopener">迁移指南</a></p>
+</blockquote>
+<ol start="2">
+<li>如果你需要 K8S 仪表盘权限执行此命令</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard</span><br></pre></td></tr></table></figure>
                 
 
                 <hr>
@@ -257,12 +259,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/environment-setup/" data-toggle="tooltip" data-placement="top" title="环境设置">&larr; Previous Post</a>
+                            <a href="/article/java-invoke-http/" data-toggle="tooltip" data-placement="top" title="Dapr Java HTTP 调用">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/getting-started/" data-toggle="tooltip" data-placement="top" title="入门">Next Post &rarr;</a>
+                            <a href="/article/setup-minikube/" data-toggle="tooltip" data-placement="top" title="设置 Minikube 集群">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -307,7 +309,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#dapr-文档"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Dapr &#x6587;&#x6863;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#内容"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x5185;&#x5BB9;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#更多文档"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x66F4;&#x591A;&#x6587;&#x6863;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#设置-azure-k8s-服务集群"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x8BBE;&#x7F6E; Azure K8S &#x670D;&#x52A1;&#x96C6;&#x7FA4;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#前置条件"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x524D;&#x7F6E;&#x6761;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#部署-azure-k8s-服务集群"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x90E8;&#x7F72; Azure K8S &#x670D;&#x52A1;&#x96C6;&#x7FA4;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#可选安装-helm-v3"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#xFF08;&#x53EF;&#x9009;&#xFF09;&#x5B89;&#x88C5; Helm v3</span></a></li></ol></li></ol>
         
         </div>
       </aside>
