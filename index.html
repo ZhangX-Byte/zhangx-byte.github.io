@@ -284,6 +284,46 @@ FAQ
 
 <div class="post-preview">
 
+    <a href="/article/dotnet-invoke-http/">
+        <h2 class="post-title">
+                                 
+            Dapr Asp.Net Core HTTP 调用
+        </h2>
+        <h3 class="post-subtitle">
+            dotnet-invoke-http
+        </h3>
+        <div class="post-content-preview">
+            版本介绍
+
+Dotnet 版本：5.0.100
+Dapr dotnet 版本：0.12.0-preview01
+
+注意: Asp.Net Core 项目中的 launchSettings.json 文件，该文件的中的端口号应和 darp --app-port 端口号相同，否则 dapr 无法正常启动 Asp.Net Core 项目。
+
+工程结构
+
+3 个 .NET 5 项目，ClientA、......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by ZhangX on
+            2020-11-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
+            
+              <a href="/tags/#DotNet5" title="DotNet5">DotNet5</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/go-invoke-http/">
         <h2 class="post-title">
                                  
@@ -628,45 +668,6 @@ Dapr 允许你为应用程序分配......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/service-invocation/">
-        <h2 class="post-title">
-                                 
-            服务调用
-        </h2>
-        <h3 class="post-subtitle">
-            docs/concepts/service-invocation/
-        </h3>
-        <div class="post-content-preview">
-            服务调用
-Service Invocation
-
-使用服务调用 API,你的微服务可以找到其它微服务，并且在你的系统中使用标准协议（当前支持 gRPC 或者 HTTP）进行可靠通讯。
-以下是一个 Dapr 服务调用如何工作的高度概括。
-
-
-服务 A 对服务 B 发起一个 http/gRPC 请求。请求进入到本地 Dapr 边车。
-Dapr 发现服务 B 的位置并且转发消息到服务 B 的 Da......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by ZhangX on
-            2020-09-15
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Dapr" title="Dapr">Dapr</a>
-            
-              <a href="/tags/#原文翻译" title="原文翻译">原文翻译</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -708,11 +709,15 @@ Dapr 发现服务 B 的位置并且转发消息到服务 B 的 Da......
     <div class="tags">
         
             
-            <a href="/tags/#Dapr" title="Dapr" rel="12">Dapr</a>
+            <a href="/tags/#Dapr" title="Dapr" rel="13">Dapr</a>
             
         
             
             <a href="/tags/#原文翻译" title="原文翻译" rel="10">原文翻译</a>
+            
+        
+            
+            <a href="/tags/#DotNet5" title="DotNet5" rel="1">DotNet5</a>
             
         
             
@@ -776,6 +781,10 @@ Dapr 发现服务 B 的位置并且转发消息到服务 B 的 Da......
     <ul>
       
         <li>
+          <a href="/article/dotnet-invoke-http/">Dapr Asp.Net Core HTTP 调用</a>
+        </li>
+      
+        <li>
           <a href="/article/go-invoke-http/">Dapr Golang HTTP 调用</a>
         </li>
       
@@ -791,10 +800,6 @@ Dapr 发现服务 B 的位置并且转发消息到服务 B 的 Da......
           <a href="/article/setup-minikube/">设置 Minikube 集群</a>
         </li>
       
-        <li>
-          <a href="/article/environment-setup/">环境设置</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -807,7 +812,7 @@ Dapr 发现服务 B 的位置并且转发消息到服务 B 的 Da......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">10</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">10</span></li></ul>
     </div>
 
         <hr>

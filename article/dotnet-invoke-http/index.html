@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Dapr Asp.Net Core HTTP 调用 - ZhangX | Dapr
+        
+    </title>
+
+    <link rel="canonical" href="http://www.huweihuang.com/article/dotnet-invoke-http/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/dotnet5/dotnet5.png')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Dapr" title="Dapr">Dapr</a>
+                            
+                              <a class="tag" href="/tags/#DotNet5" title="DotNet5">DotNet5</a>
+                            
+                        </div>
+                        <h1>Dapr Asp.Net Core HTTP 调用</h1>
+                        <h2 class="subheading">dotnet-invoke-http</h2>
+                        <span class="meta">
+                            Posted by ZhangX on
+                            2020-11-10
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ZhangX</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="版本介绍">版本介绍</h2>
+<ul>
+<li>Dotnet 版本：5.0.100</li>
+<li>Dapr dotnet 版本：0.12.0-preview01</li>
+</ul>
+<p><strong>注意:</strong> <code>Asp.Net Core</code> 项目中的 launchSettings.json 文件，该文件的中的端口号应和 darp --app-port 端口号相同，否则 dapr 无法正常启动 <code>Asp.Net Core</code> 项目。</p>
+<p><img src="/img/dotnet5/httplaunchsetting.png" alt="httplaunchsetting"></p>
+<h2 id="工程结构">工程结构</h2>
+<p><img src="/img/dotnet5/http-invoke-struct.png" alt="项目结构"></p>
+<p>3 个 .NET 5 项目，ClientA、ServiceB、ServiceC。1 个 .NET Standard 项目，Dtos 。Dtos 用于存储各种传输模型。调用路径如下图所示。新建两个 service 的意义在于展示 http 链路调用通过 dapr 如何实现。</p>
+<pre class="mermaid">graph LR;
+    dotnet5-client-a--1-->dotnet5-service-b;
+    dotnet5-service-b--2-->dotnet5-service-c;
+    dotnet5-service-c--3-->dotnet5-service-b;
+    dotnet5-service-b--4-->dotnet5-client-a;</pre>
+<ol>
+<li>dotnet5-client-a 做为客户端调用服务 dotnet5-service-b;</li>
+<li>dotnet5-service-b 做为服务中转，既收来自 dotnet5-client-a 客户端的请求，又发起对 dotnet5-service-c 的调用;</li>
+<li>dotnet5-service-c 响应 dotnet5-service-b 的请求；</li>
+<li>dotnet5-service-b 响应 dotnet5-client-a 的请求。</li>
+</ol>
+<h2 id="servicec">ServiceC</h2>
+<p>ServiceC 做为 http 调用链路调用终端只需监听 http 调用端口。通过 nuget 包管理工具，选中-&gt;Show pre-release packages，搜索 dapr ，选中 Dapr.AspNetCore 安装包。</p>
+<p><img src="/img/dotnet5/nuget.png" alt="httplaunchsetting"></p>
+<h3 id="startup">Startup</h3>
+<p>在 ConfigureServices(IServiceCollection services) 方法中通过链式调用 AddDapr() 方法注册 Dapr 到 IOC 容器中。内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">using System.Text.Json;</span><br><span class="line">using Microsoft.AspNetCore.Builder;</span><br><span class="line">using Microsoft.AspNetCore.Hosting;</span><br><span class="line">using Microsoft.Extensions.Configuration;</span><br><span class="line">using Microsoft.Extensions.DependencyInjection;</span><br><span class="line">using Microsoft.Extensions.Hosting;</span><br><span class="line"></span><br><span class="line">namespace ServiceC</span><br><span class="line">&#123;</span><br><span class="line">    public class Startup</span><br><span class="line">    &#123;</span><br><span class="line">        public Startup(IConfiguration configuration)</span><br><span class="line">        &#123;</span><br><span class="line">            Configuration = configuration;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public IConfiguration Configuration &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">        // This method gets called by the runtime. Use this method to add services to the container.</span><br><span class="line">        public void ConfigureServices(IServiceCollection services)</span><br><span class="line">        &#123;</span><br><span class="line">            services.AddControllers().AddDapr().AddJsonOptions(options =&gt; &#123;</span><br><span class="line">                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;</span><br><span class="line">                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;</span><br><span class="line">            &#125;</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</span><br><span class="line">        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)</span><br><span class="line">        &#123;</span><br><span class="line">            if (env.IsDevelopment())</span><br><span class="line">            &#123;</span><br><span class="line">                app.UseDeveloperExceptionPage();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            app.UseRouting();</span><br><span class="line">            app.UseAuthorization();</span><br><span class="line"></span><br><span class="line">            app.UseEndpoints(endpoints =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                endpoints.MapControllers();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="hellocontroller">HelloController</h3>
+<p>在 HelloController 中添加 Talk 方法，打印接收的信息并告诉调用方当前服务是谁。具体内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[ApiController]</span><br><span class="line">public class HelloController : Controller</span><br><span class="line">&#123;</span><br><span class="line">    [HttpPost(&quot;talk&quot;)]</span><br><span class="line">    public async Task&lt;SomeResponseBody&gt; Talk(SomeRequestBody someRequestBody)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(string.Format(&quot;&#123;0&#125;:&#123;1&#125;&quot;, someRequestBody.Id, someRequestBody.Time));</span><br><span class="line">        return await Task.FromResult(new SomeResponseBody</span><br><span class="line">        &#123;</span><br><span class="line">            Msg = &quot;This is ServiceC&quot;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="launchsettingjson">launchSetting.json</h3>
+<p>profiles.ServiceC.applicationUrl 端口号一定要修改为 --app-port 相同的端口号，否则通过 dapr 启动项目的时候无法正常启动</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"$schema"</span>: <span class="string">"http://json.schemastore.org/launchsettings.json"</span>,</span><br><span class="line">  <span class="attr">"iisSettings"</span>: &#123;</span><br><span class="line">    <span class="attr">"windowsAuthentication"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"anonymousAuthentication"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"iisExpress"</span>: &#123;</span><br><span class="line">      <span class="attr">"applicationUrl"</span>: <span class="string">"http://localhost:35737"</span>,</span><br><span class="line">      <span class="attr">"sslPort"</span>: <span class="number">44379</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"profiles"</span>: &#123;</span><br><span class="line">    <span class="attr">"IIS Express"</span>: &#123;</span><br><span class="line">      <span class="attr">"commandName"</span>: <span class="string">"IISExpress"</span>,</span><br><span class="line">      <span class="attr">"launchBrowser"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"launchUrl"</span>: <span class="string">"swagger"</span>,</span><br><span class="line">      <span class="attr">"environmentVariables"</span>: &#123;</span><br><span class="line">        <span class="attr">"ASPNETCORE_ENVIRONMENT"</span>: <span class="string">"Development"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"ServiceC"</span>: &#123;</span><br><span class="line">      <span class="attr">"commandName"</span>: <span class="string">"Project"</span>,</span><br><span class="line">      <span class="attr">"launchBrowser"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"launchUrl"</span>: <span class="string">"swagger"</span>,</span><br><span class="line">      <span class="attr">"applicationUrl"</span>: <span class="string">"http://localhost:9201"</span>,</span><br><span class="line">      <span class="attr">"environmentVariables"</span>: &#123;</span><br><span class="line">        <span class="attr">"ASPNETCORE_ENVIRONMENT"</span>: <span class="string">"Development"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="启动">启动</h3>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dapr run --app-id dotnet-server-c --app-port <span class="number">9201</span> --dapr-http-port <span class="number">3520</span> dotnet run</span><br></pre></td></tr></table></figure>
+<h2 id="serviceb">ServiceB</h2>
+<p>ServiceB 做为调用链中的一个中转节点，既要监听服务，同时还要发起请求。由于 <code>Dapr.AspNetCore</code> 已经引用了 <code>Dapr.Client</code> 。因此不需要再次引用 <code>Dapr.Client</code>。</p>
+<h3 id="startup">Startup</h3>
+<p>下面是 Dapr.AspNetCore AddDapr() <a href="https://github.com/dapr/dotnet-sdk/blob/master/src/Dapr.AspNetCore/DaprMvcBuilderExtensions.cs" target="_blank" rel="noopener">源码</a>，从源码中可知 AddDapr() 方法向控制器中注册 Dapr 集成。同时通过依赖注入容器注册 DaprClient 。DaprClient 可以和 Dapr 运行时交互。比如 HTTP 调用,也正因为如此，ServiceB 的 Startup 文件我们只需拷贝 ServiceC 的 Startup 文件即可。源码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// Provides extension methods for &lt;see cref=&quot;IMvcBuilder&quot; /&gt;.</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public static class DaprMvcBuilderExtensions</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// Adds Dapr integration for MVC to the provided &lt;see cref=&quot;IMvcBuilder&quot; /&gt;.</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    /// &lt;param name=&quot;builder&quot;&gt;The &lt;see cref=&quot;IMvcBuilder&quot; /&gt;.&lt;/param&gt;</span><br><span class="line">    /// &lt;param name=&quot;configureClient&quot;&gt;The (optional) &lt;see cref=&quot;DaprClientBuilder&quot; /&gt; to use for configuring the DaprClient.&lt;/param&gt;</span><br><span class="line">    /// &lt;returns&gt;The &lt;see cref=&quot;IMvcBuilder&quot; /&gt; builder.&lt;/returns&gt;</span><br><span class="line">    public static IMvcBuilder AddDapr(this IMvcBuilder builder, Action&lt;DaprClientBuilder&gt; configureClient = null)</span><br><span class="line">    &#123;</span><br><span class="line">        if (builder is null)</span><br><span class="line">        &#123;</span><br><span class="line">            throw new ArgumentNullException(nameof(builder));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // This pattern prevents registering services multiple times in the case AddDapr is called</span><br><span class="line">        // by non-user-code.</span><br><span class="line">        if (builder.Services.Any(s =&gt; s.ImplementationType == typeof(DaprMvcMarkerService)))</span><br><span class="line">        &#123;</span><br><span class="line">            return builder;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        builder.Services.AddDaprClient(configureClient);</span><br><span class="line"></span><br><span class="line">        builder.Services.AddSingleton&lt;DaprMvcMarkerService&gt;();</span><br><span class="line">        builder.Services.AddSingleton&lt;IApplicationModelProvider, StateEntryApplicationModelProvider&gt;();</span><br><span class="line">        builder.Services.Configure&lt;MvcOptions&gt;(options =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            options.ModelBinderProviders.Insert(0, new StateEntryModelBinderProvider());</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        return builder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private class DaprMvcMarkerService</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="hellocontroller">HelloController</h3>
+<p>通过构造器注入 DaprClient 以发起 Http 调用 ServiceC 提供的服务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[ApiController]</span><br><span class="line">public class HelloController : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    private readonly DaprClient daprClient;</span><br><span class="line"></span><br><span class="line">    public HelloController(DaprClient daprClient)</span><br><span class="line">    &#123;</span><br><span class="line">        this.daprClient = daprClient;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    [HttpPost(&quot;talk&quot;)]</span><br><span class="line">    public async Task&lt;SomeResponseBody&gt; Talk(SomeRequestBody someRequestBody)</span><br><span class="line">    &#123;</span><br><span class="line">        var data = new &#123; Time = DateTime.Now.ToLongDateString(), Id = &quot;This is Service C.&quot; &#125;;</span><br><span class="line">        HTTPExtension httpExtension = new HTTPExtension()</span><br><span class="line">        &#123;</span><br><span class="line">            Verb = HTTPVerb.Post</span><br><span class="line">        &#125;;</span><br><span class="line">        SomeResponseBody responseBody = await daprClient.InvokeMethodAsync&lt;object, SomeResponseBody&gt;(&quot;dotnet-server-c&quot;, &quot;talk&quot;, data, httpExtension);</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(string.Format(&quot;&#123;0&#125;:&#123;1&#125; \n recieve message:&#123;2&#125;&quot;, someRequestBody.Id, someRequestBody.Time, responseBody.Msg));</span><br><span class="line">        return await Task.FromResult(new SomeResponseBody</span><br><span class="line">        &#123;</span><br><span class="line">            Msg = &quot;This is ServiceB&quot;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="launchsettingjson">launchSetting.json</h3>
+<p>参考 ServiceC 更改端口号。</p>
+<h3 id="启动">启动</h3>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dapr run --app-id dotnet-server-b --app-port <span class="number">9200</span> --dapr-http-port <span class="number">3521</span> dotnet run</span><br></pre></td></tr></table></figure>
+<h2 id="clienta">ClientA</h2>
+<p>ClientA 的目的是发起对 ServiceB 服务的调用，因此只需添加 <code>Dapr.Client</code> 用于和 Dapr 运行时交互即可。内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static async Task Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            var jsonOptions = new JsonSerializerOptions()</span><br><span class="line">            &#123;</span><br><span class="line">                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,</span><br><span class="line">                PropertyNameCaseInsensitive = true,</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            var client = new DaprClientBuilder()</span><br><span class="line">                .UseJsonSerializationOptions(jsonOptions)</span><br><span class="line">                .Build();</span><br><span class="line"></span><br><span class="line">            var data = new &#123; Time = DateTime.Now.ToLongDateString(), Id=&quot;This is Client A&quot; &#125;;</span><br><span class="line">            HTTPExtension httpExtension = new HTTPExtension()</span><br><span class="line">            &#123;</span><br><span class="line">                Verb = HTTPVerb.Post</span><br><span class="line">            &#125;;</span><br><span class="line">            while (true)</span><br><span class="line">            &#123;</span><br><span class="line">                var a = await client.InvokeMethodAsync&lt;object, SomeResponseBody&gt;(&quot;dotnet-server-b&quot;, &quot;talk&quot;, data, httpExtension);</span><br><span class="line">                Console.WriteLine(a.Msg);</span><br><span class="line">                await Task.Delay(5 * 1000);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>每间隔 5 秒向 ServiceB 发送一次请求。</p>
+<h3 id="启动">启动</h3>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dapr run --app-id dotnet5-http-client dotnet run</span><br></pre></td></tr></table></figure>
+<p>ClientA 接收内容:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">== APP == This is ServiceB</span><br></pre></td></tr></table></figure>
+<p>SerivceB 接收内容:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">== APP == This is Client A:<span class="number">2020</span>年<span class="number">11</span>月<span class="number">27</span>日 星期五</span><br><span class="line"></span><br><span class="line">== APP ==  recieve message:This is ServiceC</span><br></pre></td></tr></table></figure>
+<p>ServiceC 接收内容:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">== APP == This is Service C.:<span class="number">2020</span>年<span class="number">11</span>月<span class="number">27</span>日 星期五</span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2>
+<p>至此，DOTNET5 通过 dapr HTTP 调用的示例就结束了。</p>
+<p><img src="/img/dotnet5/http-list.png" alt="http-invoke"></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/article/go-invoke-http/" data-toggle="tooltip" data-placement="top" title="Dapr Golang HTTP 调用">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#版本介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x7248;&#x672C;&#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#工程结构"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5DE5;&#x7A0B;&#x7ED3;&#x6784;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#servicec"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">ServiceC</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#startup"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Startup</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hellocontroller"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">HelloController</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#launchsettingjson"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">launchSetting.json</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#启动"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">&#x542F;&#x52A8;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#serviceb"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">ServiceB</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#startup"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Startup</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hellocontroller"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">HelloController</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#launchsettingjson"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">launchSetting.json</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#启动"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">&#x542F;&#x52A8;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#clienta"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">ClientA</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#启动"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">&#x542F;&#x52A8;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">&#x603B;&#x7ED3;</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Dapr" title="Dapr">Dapr</a>
+                        
+                          <a class="tag" href="/tags/#DotNet5" title="DotNet5">DotNet5</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ZhangX-Byte">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                <!--  -->
+
+                </ul>
+                <!-- <p class="copyright text-muted">
+                    Copyright &copy; ZhangX 2020 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://www.huweihuang.com">胡伟煌</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huweihuang&repo=hexo-theme-huweihuang&type=star&count=true" >
+                    </iframe>
+                </p> -->
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.huweihuang.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+    <script>
+      if (window.mermaid) {
+        mermaid.initialize({theme: 'forest'});
+      }
+    </script>
+  
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.huweihuang.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
