@@ -44,6 +44,8 @@ graph LR;
 
 ServiceC 做为 http 调用链路调用终端只需监听 http 调用端口。通过 nuget 包管理工具，选中->Show pre-release packages，搜索 dapr ，选中 Dapr.AspNetCore 安装包。
 
+![httplaunchsetting](/img/dotnet5/nuget.png)
+
 ### Startup
 
 在 ConfigureServices(IServiceCollection services) 方法中通过链式调用 AddDapr() 方法注册 Dapr 到 IOC 容器中。内容如下：
