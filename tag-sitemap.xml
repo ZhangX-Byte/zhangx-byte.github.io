@@ -23,15 +23,22 @@
     </url>
 
     <url>
-        <loc>http://www.huweihuang.com/tags/Dapr/</loc>
+        <loc>http://www.huweihuang.com/tags/DotNet5/</loc>
         <lastmod>2020-11-27T07:13:12.018Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://www.huweihuang.com/tags/DotNet5/</loc>
-        <lastmod>2020-11-27T07:13:12.018Z</lastmod>
+        <loc>http://www.huweihuang.com/tags/Dapr/</loc>
+        <lastmod>2020-12-05T01:03:01.819Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.huweihuang.com/tags/Python3/</loc>
+        <lastmod>2020-12-05T01:03:01.819Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
